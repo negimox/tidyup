@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "skills": {
+    "background-execution": {
+      "source": "n0an/Background-Execution-Agent-Skill",
+      "sourceType": "github",
+      "skillPath": "background-execution/SKILL.md",
+      "computedHash": "004e442dc25a149ee8e4acafcbd1dfebe1bfc5a51a80dbcce8358b83c9d11dd7"
+    },
+    "core-data-expert": {
+      "source": "avdlee/core-data-agent-skill",
+      "sourceType": "github",
+      "skillPath": "core-data-expert/SKILL.md",
+      "computedHash": "b8d2829005b1f2fefbaa8af2ea7d7d64e2fbeca2f2172033176ad0780edc3970"
+    },
+    "figma-to-swiftui": {
+      "source": "daetojemax/figma-to-swiftui-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "d56b3f4502c7dedb01ce2a3c536b50431cbff8c3b30f62ff1c472514b6ba73f8"
+    },
+    "observability": {
+      "source": "n0an/Observability-Agent-Skill",
+      "sourceType": "github",
+      "skillPath": "observability/SKILL.md",
+      "computedHash": "92f3019ff1a0ccfc5adb4cfa45e13ea1f77b94da30454c67df12413c8779bae9"
+    },
+    "swift-architecture-skill": {
+      "source": "efremidze/swift-architecture-skill",
+      "sourceType": "github",
+      "skillPath": "swift-architecture-skill/SKILL.md",
+      "computedHash": "407bd56e1f48e57e445780f1d0c54cd4e858acd2fc7736e725b039f79efc04d3"
+    },
+    "swift-concurrency-pro": {
+      "source": "twostraws/swift-concurrency-agent-skill",
+      "sourceType": "github",
+      "skillPath": "swift-concurrency-pro/SKILL.md",
+      "computedHash": "db6c88d8da1a264188a2ad826a0ed73d227384315b27e47f3bb6b78ca1a3df40"
+    },
+    "swift-format-style": {
+      "source": "n0an/Swift-FormatStyle-Agent-Skill",
+      "sourceType": "github",
+      "skillPath": "swift-format-style/SKILL.md",
+      "computedHash": "66f4a1245750df4438a53696b0288cccf7bf575581b3050420871c3db7f8ffa4"
+    },
+    "swift-security-expert": {
+      "source": "ivan-magda/swift-security-skill",
+      "sourceType": "github",
+      "skillPath": "swift-security-expert/SKILL.md",
+      "computedHash": "2ed2d08862b10401756c671ffedbe707d883d6a2667a77082b529c36c5afb2f8"
+    },
+    "swift-testing": {
+      "source": "bocato/swift-testing-agent-skill",
+      "sourceType": "github",
+      "skillPath": "swift-testing/SKILL.md",
+      "computedHash": "7527cbdcc065008285c6b2a179cd5be573532bd5779ca96311612882c7d16bb0"
+    },
+    "swiftdata-pro": {
+      "source": "twostraws/swiftdata-agent-skill",
+      "sourceType": "github",
+      "skillPath": "swiftdata-pro/SKILL.md",
+      "computedHash": "2f979bad98ea3a6744084c5f93e27897f02e8d0ffe15dd03042e88aaae4da14c"
+    },
+    "swiftui-design-principles": {
+      "source": "arjitj2/swiftui-design-principles",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "2692dc771633b2915c1b75000009c1a9198af3e3f994ae46d175b48e008edc57"
+    },
+    "swiftui-pro": {
+      "source": "twostraws/swiftui-agent-skill",
+      "sourceType": "github",
+      "skillPath": "swiftui-pro/SKILL.md",
+      "computedHash": "e0edf9a937bbb8c86c170b130ff825f158cc286f07ec477b67835e9c1b20267e"
+    },
+    "widgets": {
+      "source": "n0an/Widgets-Agent-Skill",
+      "sourceType": "github",
+      "skillPath": "widgets/SKILL.md",
+      "computedHash": "161cec00ded4f2aff93eef3ae68270cfb359b969ef6727197d14e4ee06c38e04"
+    }
+  }
+}
