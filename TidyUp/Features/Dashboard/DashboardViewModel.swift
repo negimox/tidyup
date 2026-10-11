@@ -61,6 +61,13 @@ final class DashboardViewModel {
         scanState = .idle
     }
 
+    /// Handles a deep link triggered by tapping the widget.
+    func handleWidgetScanDeepLink(modelContainer: ModelContainer? = nil) {
+        if scanResult == nil && scanState == .idle {
+            startScan(modelContainer: modelContainer)
+        }
+    }
+
     // MARK: - Private
 
     private func performScan(modelContainer: ModelContainer? = nil) async {
@@ -96,6 +103,20 @@ final class DashboardViewModel {
                 scanState = .done
                 // Refresh storage after scan
                 await loadStorageInfo()
+
+                // Sync scan metrics to WidgetDataStore
+                let similarBytes = result.similarGroups.reduce(0) { $0 + $1.estimatedSavings }
+                let screenshotsBytes = result.screenshots.reduce(0) { $0 + $1.fileSize }
+                let videosBytes = result.videos.reduce(0) { $0 + $1.fileSize }
+                WidgetDataStore.shared.updateFromScanResult(
+                    usedBytes: usedBytes,
+                    totalBytes: totalBytes,
+                    freeableBytes: result.totalFreeable,
+                    screenshotsBytes: screenshotsBytes,
+                    videosBytes: videosBytes,
+                    similarPhotosBytes: similarBytes,
+                    contactDuplicatesCount: result.duplicateContacts.count
+                )
             case .failed(let error):
                 scanError = error
                 scanState = .idle
