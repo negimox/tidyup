@@ -342,6 +342,7 @@ private struct SimilarPhotoItem: View {
                 AssetThumbnail(asset: asset, size: 110)
                     .frame(width: 110, height: 110)
                     .clipShape(.rect(cornerRadius: 12))
+                    .contentShape(.rect(cornerRadius: 12))
                     .overlay {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(isSelected ? Theme.deleteRed : Color.clear, lineWidth: 2)
@@ -349,6 +350,7 @@ private struct SimilarPhotoItem: View {
                     .opacity(isSelected ? 0.75 : 1.0)
             }
             .buttonStyle(.plain)
+            .contentShape(.rect(cornerRadius: 12))
 
             // "Best" badge at top-left
             if isBest {
@@ -384,9 +386,12 @@ private struct SimilarPhotoItem: View {
                     .shadow(radius: 2)
             }
             .buttonStyle(.plain)
+            .contentShape(Circle())
             .padding(6)
         }
         .frame(width: 110, height: 110)
+        .clipShape(.rect(cornerRadius: 12))
+        .contentShape(.rect(cornerRadius: 12))
         .overlay(alignment: .bottomLeading) {
             Button(action: onView) {
                 HStack(spacing: 3) {
@@ -404,13 +409,14 @@ private struct SimilarPhotoItem: View {
                 .shadow(radius: 2)
             }
             .buttonStyle(.plain)
-            .contentShape(Rectangle())
+            .contentShape(.capsule)
             .highPriorityGesture(
                 TapGesture().onEnded {
                     onView()
                 }
             )
             .padding(6)
+            .zIndex(10)
             .accessibilityLabel("View photo in full screen")
         }
     }

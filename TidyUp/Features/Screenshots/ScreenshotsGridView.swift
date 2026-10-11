@@ -159,6 +159,7 @@ private struct ScreenshotCell: View {
                 AssetThumbnail(asset: item.asset, size: 110)
                     .frame(width: 110, height: 110)
                     .clipShape(.rect(cornerRadius: Theme.radiusCard))
+                    .contentShape(.rect(cornerRadius: Theme.radiusCard))
                     .overlay {
                         RoundedRectangle(cornerRadius: Theme.radiusCard)
                             .stroke(isSelected ? Theme.deleteRed : .clear, lineWidth: 2)
@@ -166,6 +167,7 @@ private struct ScreenshotCell: View {
                     .opacity(isSelected ? 0.75 : 1)
             }
             .buttonStyle(.plain)
+            .contentShape(.rect(cornerRadius: Theme.radiusCard))
 
             Button(action: action) {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
@@ -179,9 +181,12 @@ private struct ScreenshotCell: View {
                     .shadow(radius: 2)
             }
             .buttonStyle(.plain)
+            .contentShape(Circle())
             .padding(6)
         }
         .frame(width: 110, height: 110)
+        .clipShape(.rect(cornerRadius: Theme.radiusCard))
+        .contentShape(.rect(cornerRadius: Theme.radiusCard))
         .overlay(alignment: .bottomLeading) {
             Button(action: onView) {
                 HStack(spacing: 3) {
@@ -199,13 +204,14 @@ private struct ScreenshotCell: View {
                 .shadow(radius: 2)
             }
             .buttonStyle(.plain)
-            .contentShape(Rectangle())
+            .contentShape(.capsule)
             .highPriorityGesture(
                 TapGesture().onEnded {
                     onView()
                 }
             )
             .padding(6)
+            .zIndex(10)
             .accessibilityLabel("View screenshot in full screen")
         }
         .accessibilityLabel("Screenshot, \(isSelected ? "selected" : "not selected")")

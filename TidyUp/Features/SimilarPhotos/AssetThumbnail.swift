@@ -14,6 +14,9 @@ struct AssetThumbnail: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFill()
+                    .frame(width: size, height: size)
+                    .clipped()
+                    .contentShape(Rectangle())
             } else {
                 Color.secondary.opacity(0.12)
                     .overlay {
@@ -23,6 +26,7 @@ struct AssetThumbnail: View {
         }
         .frame(width: size, height: size)
         .clipped()
+        .contentShape(Rectangle())
         .task(id: asset.localIdentifier) {
             await loadThumbnail()
         }

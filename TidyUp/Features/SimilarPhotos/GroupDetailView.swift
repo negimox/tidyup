@@ -112,6 +112,7 @@ private struct GroupPhotoCell: View {
                 AssetThumbnail(asset: asset, size: 110)
                     .frame(width: 110, height: 110)
                     .clipShape(.rect(cornerRadius: Theme.radiusCard))
+                    .contentShape(.rect(cornerRadius: Theme.radiusCard))
                     .overlay {
                         RoundedRectangle(cornerRadius: Theme.radiusCard)
                             .stroke(isSelected ? Theme.deleteRed : .clear, lineWidth: 3)
@@ -119,6 +120,7 @@ private struct GroupPhotoCell: View {
                     .opacity(isSelected ? 0.75 : 1)
             }
             .buttonStyle(.plain)
+            .contentShape(.rect(cornerRadius: Theme.radiusCard))
 
             if isBest {
                 VStack {
@@ -147,9 +149,12 @@ private struct GroupPhotoCell: View {
                     .shadow(radius: 2)
             }
             .buttonStyle(.plain)
+            .contentShape(Circle())
             .padding(6)
         }
         .frame(width: 110, height: 110)
+        .clipShape(.rect(cornerRadius: Theme.radiusCard))
+        .contentShape(.rect(cornerRadius: Theme.radiusCard))
         .overlay(alignment: .bottomLeading) {
             Button(action: onView) {
                 HStack(spacing: 3) {
@@ -167,13 +172,14 @@ private struct GroupPhotoCell: View {
                 .shadow(radius: 2)
             }
             .buttonStyle(.plain)
-            .contentShape(Rectangle())
+            .contentShape(.capsule)
             .highPriorityGesture(
                 TapGesture().onEnded {
                     onView()
                 }
             )
             .padding(6)
+            .zIndex(10)
             .accessibilityLabel("View photo in full screen")
         }
         .accessibilityLabel(isBest ? "Best photo, \(isSelected ? "selected for deletion" : "kept")" : "Photo, \(isSelected ? "selected for deletion" : "kept")")
