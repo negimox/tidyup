@@ -7,144 +7,101 @@
 	objects = {
 
 		/* Begin PBXBuildFile section */
-		ADDD156E6DBD2ADD288AC675 /* AssetThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72413610CC984C4617D5E17 /* AssetThumbnail.swift */; };
-		26FB5961EBAC913E04D706C2 /* CachedFeaturePrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B6981B13FAA2E667C7EE0A /* CachedFeaturePrint.swift */; };
-		8A25696A82130B5343263EBA /* CategoryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275DAF64C1839675A8ED4F3D /* CategoryRowView.swift */; };
-		1C499C32F86B158D39A5C11D /* CompressVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CCD7C755111CCCD3B32591 /* CompressVideosView.swift */; };
-		65A2604F2727E52993960199 /* ContactMergePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08FB3F80EFC73CB1B9B44FC /* ContactMergePreviewView.swift */; };
-		06A7F8906FA054DDE0C3874A /* ContactScanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02635F666C9C8E28F01ADB71 /* ContactScanService.swift */; };
-		22D985BA5308BC4F630C5CA8 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB86E93175F32650D957C8 /* DashboardView.swift */; };
-		B6C54A435CAB0AE59E40CE13 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12781BFE69A15A2FCA8283AC /* DashboardViewModel.swift */; };
-		1A0A579735BF8FEC25DFAC8F /* DeletionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1F4E676C9110E78DFD2DF /* DeletionService.swift */; };
-		3E575E3DE98466F78B6CB34C /* DuplicateContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C40E2A7B68EBA1C674C4EFC /* DuplicateContactGroup.swift */; };
-		D864A300D50D5EB5CEB38079 /* DuplicateContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92561C085F6FD7DE000B16C2 /* DuplicateContactsView.swift */; };
-		F170D680FE70F00F13F94255 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA065568B091E3EABFC4AB3 /* GroupDetailView.swift */; };
-		81B68BEF579C598D77ACDCD4 /* LargeVideosListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49CBB60FFB4E1EFE102D68 /* LargeVideosListView.swift */; };
-		82A0C729BD36F32F08C5ADE7 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDFEF337F08C8709B7F9828 /* MainTabView.swift */; };
-		BBA2EA8B3245304F12D604FC /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3557567EBC88B0FC823493 /* PermissionService.swift */; };
-		6A1C251BF990069CC35767C5 /* PermissionsPrimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB65FDAC4A2F53E00D05901C /* PermissionsPrimerView.swift */; };
-		9FCEAA58FF56EF37612C00F3 /* PhotoScanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C8FF46CA5151AF3F325F30 /* PhotoScanService.swift */; };
-		74578AD6C50E171FCC08D3EF /* RecycleBinSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F413E9A42039487ED3DD6BE5 /* RecycleBinSheet.swift */; };
-		304B93011D8F6FEDFBDB7DE5 /* ReviewDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552A36B9B9F8BACA20EC3683 /* ReviewDeleteView.swift */; };
-		EC61C7A52EA81CBCEC2B287B /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0D8CA94D5B3352861A82B3 /* ReviewViewModel.swift */; };
-		30118F44ADC9172D381046BE /* ScanProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AAAA2B8446BAD25512047F /* ScanProgress.swift */; };
-		BFAAC0CB01039F2C12B438C9 /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633662AB736AC6666220B18F /* ScanResult.swift */; };
-		00DE14366FCFD4CB7DA91F84 /* ScanStorageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623F7B6097F9CE10C1CFE186 /* ScanStorageIntent.swift */; };
-		0EAB4EC8951214D3CC075503 /* ScreenshotItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078EFDDDB82A4F36688B748 /* ScreenshotItem.swift */; };
-		E27FCBF4C6036BF7275D88FD /* ScreenshotsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F076A53678DAF093E880DB60 /* ScreenshotsGridView.swift */; };
-		B695289D1DB5BE0952962AA8 /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915961F5B05141EE2F2E5134 /* SelectionStore.swift */; };
-		4485E8E13A045448AA6F0658 /* SelectionToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483F6DF9202B659F36DA174 /* SelectionToolbar.swift */; };
-		FECBEEFD307C244B7B73C581 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B5AE1C1848C81ECBD9FF4D /* SettingsView.swift */; };
-		E417B0E88B8110F139B343DF /* SimilarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C11C4CFD7D20F0EF20301E7 /* SimilarGroup.swift */; };
-		25EEE0615BE046063EA54344 /* SimilarPhotosListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B987DF1FA79026204D4E0A /* SimilarPhotosListView.swift */; };
-		22D18181EF2F18DDDA017ECA /* SpaceFreedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D66ED599F6A284E77ADAC50 /* SpaceFreedView.swift */; };
-		FBF619C1264821F0D1EF5CAD /* StorageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44CD1FFE39CC874417CDCE /* StorageRingView.swift */; };
-		CD294B03FBE8B85C8BDF1568 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA948AD5E58479BC8875E2 /* StorageService.swift */; };
-		3DBE88477A4CD96D56D7EAA0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D3D0E7378684BA34F473A0 /* Theme.swift */; };
-		6CA3F54ED2F45D9A6B76F4EE /* TidyUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078D0850B568A10595329E5 /* TidyUpApp.swift */; };
-		8B2BD359D0835F1990D20980 /* VaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABAA05864892D931AE6FC8 /* VaultView.swift */; };
-		4503BBFDA10B0D3AC87777D2 /* VideoCompressionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A64BF133F1F54BF779556 /* VideoCompressionService.swift */; };
-		903815D3AB7B1C5DC5A016BE /* VideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121F54D550E84FCB4DA101BE /* VideoItem.swift */; };
-		9E0A3BB1F6D3CDE257F928D2 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A8D06BCBC56D635702954 /* WidgetDataStore.swift */; };
-		D6E0BF292A5522C101BAF515 /* TidyUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4E2247AA7F9D099E589E3 /* TidyUpTests.swift */; };
-		C6658AD360ED28D5C62DE963 /* StorageWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEE20526E1940E90FFEAEEE /* StorageWidgetView.swift */; };
-		43283887CC80A6A404014E10 /* TidyUpWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47313BC0F240C721ACC645A /* TidyUpWidget.swift */; };
-		1DE9C7C5634F4035E4FABFE3 /* ScanStorageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623F7B6097F9CE10C1CFE186 /* ScanStorageIntent.swift */; };
-		4F2856516CFA64A1933B6FE7 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A8D06BCBC56D635702954 /* WidgetDataStore.swift */; };
-		9C266A102601D5B04F4CB2A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5158E2FCC5ED84FC469F05A3 /* Assets.xcassets */; };
-		E9D7403DABEF70AC77A457A2 /* TidyUpWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5B4950D69C488EB3FDCAF390 /* TidyUpWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9EAC1EF7FDC7DB927A1EC911 /* AssetThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9703256CC3EA26E32771E842 /* AssetThumbnail.swift */; };
+		6CEB1A0B1AC42B46D07385B8 /* CachedFeaturePrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F225AAA8CF7E407DC99AD8 /* CachedFeaturePrint.swift */; };
+		06AD0925F925527A83BF3BB8 /* CategoryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3552E5D8B00C82640AF57 /* CategoryRowView.swift */; };
+		26016D84B30B1A5B08993C4E /* CompressVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2290972462BA112928DB2491 /* CompressVideosView.swift */; };
+		97E3CA6B60E454F8BD9705E1 /* ContactMergePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFD1361FC02B611725B451A /* ContactMergePreviewView.swift */; };
+		401112D56A69178C95F36058 /* ContactScanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B5F7E6F56DD5F24F47DEA1 /* ContactScanService.swift */; };
+		0D470858EC6D9240AD3F5461 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB894017630C16BE4B6025C /* DashboardView.swift */; };
+		BE8ADA7BBEA35E1424298FE1 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8821A3875E3A89A7F7722C /* DashboardViewModel.swift */; };
+		2EB2C09BE5C6480E78B7C728 /* DeletionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E24E8FCA0527BCB891D43 /* DeletionService.swift */; };
+		2F0ADA097CF748B5A610C71E /* DuplicateContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F119A89A9B2518DABE121 /* DuplicateContactGroup.swift */; };
+		41676135FBE555AC3B3A6C2F /* DuplicateContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FFA3F5EDB5B0C636398067 /* DuplicateContactsView.swift */; };
+		5DABCF5B3FCDB695BDE04DF0 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0262EF45341540BA9182 /* GroupDetailView.swift */; };
+		2F9066529F7B192AE10754FF /* LargeVideosListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5B6875DC91FA96454FC861 /* LargeVideosListView.swift */; };
+		A312624A96355D6FF48885C2 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A123E9876BA56B9340B6E1 /* MainTabView.swift */; };
+		4CE1C500AB5379A309977246 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6019FEB79786027E2ABDFB97 /* PermissionService.swift */; };
+		7A6FB75DD27E6A28B589D33B /* PermissionsPrimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA703CE3D63326C05926616 /* PermissionsPrimerView.swift */; };
+		4F8371EA6E6BF2176DB8A259 /* PhotoScanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F971CB638422413BCF47E5 /* PhotoScanService.swift */; };
+		C2E1680D40D53DE5874A5CF5 /* RecycleBinSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EF5A051D1C0285C8CC2CA8 /* RecycleBinSheet.swift */; };
+		740F712579A1B87E0CAC3481 /* ReviewDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A03806AA41D75B97E26C516 /* ReviewDeleteView.swift */; };
+		43469F183D58FF702DA784A9 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92634EB452FEAF4C7131555B /* ReviewViewModel.swift */; };
+		042C77A1C8A29E853B2FA545 /* ScanProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819BEC933623ABBE9EE5041C /* ScanProgress.swift */; };
+		428323333AF67B167193F4AC /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648F68F663F1FDF1AD221E5 /* ScanResult.swift */; };
+		78046B4657AC01F4B558C117 /* ScreenshotItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40EE3EC156FDD736D8A9245 /* ScreenshotItem.swift */; };
+		0871ADC6C403F4E30DC149E9 /* ScreenshotsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1669E475E219B859BC357F0 /* ScreenshotsGridView.swift */; };
+		6BF74D2405B368F749FACB8B /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8AEA4E3740AA8047B2C38F /* SelectionStore.swift */; };
+		EAD05C63808301158728689A /* SelectionToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E3AFDFA0526FE54AB23B1 /* SelectionToolbar.swift */; };
+		78634C0B75265F6AB3B74861 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209E39D6ED038CE88589216C /* SettingsView.swift */; };
+		883980FEB9E76F5F3B0EB4A1 /* SimilarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1CA990AF0ECE5711BB58BE /* SimilarGroup.swift */; };
+		52AB055B4A69CF02E79028B8 /* SimilarPhotosListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FA5FBA226D244969F88BEF /* SimilarPhotosListView.swift */; };
+		D1A468C6332B755C8DA4B6AD /* SpaceFreedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B3E83E483C37B2BC811B2 /* SpaceFreedView.swift */; };
+		1A69CDDF93978ACF1C9A4411 /* StorageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02EC5D45006C98DBF6E4AB /* StorageRingView.swift */; };
+		1061609175A5DD30FDD087E3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51EF29658A6EFF9D7E1CD3F /* StorageService.swift */; };
+		BC30C57B47043EC95848F093 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3057B6CABFAA6A0D2C01EA1 /* Theme.swift */; };
+		F778EDFE5DFF50D60E1E32F3 /* TidyUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395EB2C45E24DAB1CA3D78EF /* TidyUpApp.swift */; };
+		AB7BAA79605AF4CAE52F5910 /* VaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810524CE5C7C7F79B08A7E38 /* VaultView.swift */; };
+		B42223B5D41C1A338CCB4870 /* VideoCompressionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECDC4E77AE3C0B92AD0D935 /* VideoCompressionService.swift */; };
+		860BD2210D3C3CF73935516C /* VideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFB7E09112CA6809AB0F4E7 /* VideoItem.swift */; };
+		18190583018F9702EA01A7EF /* TidyUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24B10F5544B7F00677C1F89 /* TidyUpTests.swift */; };
+		8FD060900D062608DA4CA3FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7F9706FDB6153906954151B /* Assets.xcassets */; };
 		/* End PBXBuildFile section */
 
-		/* Begin PBXContainerItemProxy section */
-		3D8D47EF0A0F54E0545E373F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F92EAFAF8C67AE4BB87FBBA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC8FEEF6638BB2B8533C3336;
-			remoteInfo = TidyUpWidgetExtension;
-		};
-		/* End PBXContainerItemProxy section */
-
-		/* Begin PBXCopyFilesBuildPhase section */
-		21ACA46D6EEF1BFF530FF88F /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				E9D7403DABEF70AC77A457A2 /* TidyUpWidgetExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		/* End PBXCopyFilesBuildPhase section */
-
 		/* Begin PBXFileReference section */
-		B72413610CC984C4617D5E17 /* AssetThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SimilarPhotos/AssetThumbnail.swift"; sourceTree = SOURCE_ROOT; };
-		86B6981B13FAA2E667C7EE0A /* CachedFeaturePrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Cache/CachedFeaturePrint.swift"; sourceTree = SOURCE_ROOT; };
-		275DAF64C1839675A8ED4F3D /* CategoryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/CategoryRowView.swift"; sourceTree = SOURCE_ROOT; };
-		11CCD7C755111CCCD3B32591 /* CompressVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Videos/CompressVideosView.swift"; sourceTree = SOURCE_ROOT; };
-		B08FB3F80EFC73CB1B9B44FC /* ContactMergePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Contacts/ContactMergePreviewView.swift"; sourceTree = SOURCE_ROOT; };
-		02635F666C9C8E28F01ADB71 /* ContactScanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/ContactScanService.swift"; sourceTree = SOURCE_ROOT; };
-		3EEB86E93175F32650D957C8 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Dashboard/DashboardView.swift"; sourceTree = SOURCE_ROOT; };
-		12781BFE69A15A2FCA8283AC /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Dashboard/DashboardViewModel.swift"; sourceTree = SOURCE_ROOT; };
-		91C1F4E676C9110E78DFD2DF /* DeletionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/DeletionService.swift"; sourceTree = SOURCE_ROOT; };
-		5C40E2A7B68EBA1C674C4EFC /* DuplicateContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/DuplicateContactGroup.swift"; sourceTree = SOURCE_ROOT; };
-		92561C085F6FD7DE000B16C2 /* DuplicateContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Contacts/DuplicateContactsView.swift"; sourceTree = SOURCE_ROOT; };
-		2BA065568B091E3EABFC4AB3 /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SimilarPhotos/GroupDetailView.swift"; sourceTree = SOURCE_ROOT; };
-		FA49CBB60FFB4E1EFE102D68 /* LargeVideosListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Videos/LargeVideosListView.swift"; sourceTree = SOURCE_ROOT; };
-		9FDFEF337F08C8709B7F9828 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/App/MainTabView.swift"; sourceTree = SOURCE_ROOT; };
-		3D3557567EBC88B0FC823493 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/PermissionService.swift"; sourceTree = SOURCE_ROOT; };
-		BB65FDAC4A2F53E00D05901C /* PermissionsPrimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Permissions/PermissionsPrimerView.swift"; sourceTree = SOURCE_ROOT; };
-		00C8FF46CA5151AF3F325F30 /* PhotoScanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/PhotoScanService.swift"; sourceTree = SOURCE_ROOT; };
-		F413E9A42039487ED3DD6BE5 /* RecycleBinSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Dashboard/RecycleBinSheet.swift"; sourceTree = SOURCE_ROOT; };
-		552A36B9B9F8BACA20EC3683 /* ReviewDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Review/ReviewDeleteView.swift"; sourceTree = SOURCE_ROOT; };
-		0B0D8CA94D5B3352861A82B3 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Review/ReviewViewModel.swift"; sourceTree = SOURCE_ROOT; };
-		41AAAA2B8446BAD25512047F /* ScanProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/ScanProgress.swift"; sourceTree = SOURCE_ROOT; };
-		633662AB736AC6666220B18F /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/ScanResult.swift"; sourceTree = SOURCE_ROOT; };
-		623F7B6097F9CE10C1CFE186 /* ScanStorageIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/ScanStorageIntent.swift"; sourceTree = SOURCE_ROOT; };
-		8078EFDDDB82A4F36688B748 /* ScreenshotItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/ScreenshotItem.swift"; sourceTree = SOURCE_ROOT; };
-		F076A53678DAF093E880DB60 /* ScreenshotsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Screenshots/ScreenshotsGridView.swift"; sourceTree = SOURCE_ROOT; };
-		915961F5B05141EE2F2E5134 /* SelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/SelectionStore.swift"; sourceTree = SOURCE_ROOT; };
-		C483F6DF9202B659F36DA174 /* SelectionToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/SelectionToolbar.swift"; sourceTree = SOURCE_ROOT; };
-		E7B5AE1C1848C81ECBD9FF4D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/App/SettingsView.swift"; sourceTree = SOURCE_ROOT; };
-		8C11C4CFD7D20F0EF20301E7 /* SimilarGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/SimilarGroup.swift"; sourceTree = SOURCE_ROOT; };
-		17B987DF1FA79026204D4E0A /* SimilarPhotosListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SimilarPhotos/SimilarPhotosListView.swift"; sourceTree = SOURCE_ROOT; };
-		6D66ED599F6A284E77ADAC50 /* SpaceFreedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SpaceFreed/SpaceFreedView.swift"; sourceTree = SOURCE_ROOT; };
-		EC44CD1FFE39CC874417CDCE /* StorageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/StorageRingView.swift"; sourceTree = SOURCE_ROOT; };
-		C4DA948AD5E58479BC8875E2 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/StorageService.swift"; sourceTree = SOURCE_ROOT; };
-		48D3D0E7378684BA34F473A0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/Theme.swift"; sourceTree = SOURCE_ROOT; };
-		F078D0850B568A10595329E5 /* TidyUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/App/TidyUpApp.swift"; sourceTree = SOURCE_ROOT; };
-		26ABAA05864892D931AE6FC8 /* VaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Vault/VaultView.swift"; sourceTree = SOURCE_ROOT; };
-		3C9A64BF133F1F54BF779556 /* VideoCompressionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/VideoCompressionService.swift"; sourceTree = SOURCE_ROOT; };
-		121F54D550E84FCB4DA101BE /* VideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/VideoItem.swift"; sourceTree = SOURCE_ROOT; };
-		004A8D06BCBC56D635702954 /* WidgetDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/WidgetDataStore.swift"; sourceTree = SOURCE_ROOT; };
-		EED4E2247AA7F9D099E589E3 /* TidyUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUpTests/TidyUpTests.swift"; sourceTree = SOURCE_ROOT; };
-		6AEE20526E1940E90FFEAEEE /* StorageWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUpWidget/StorageWidgetView.swift"; sourceTree = SOURCE_ROOT; };
-		D47313BC0F240C721ACC645A /* TidyUpWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUpWidget/TidyUpWidget.swift"; sourceTree = SOURCE_ROOT; };
-		E5EE2F956FF2EBA9D6587F7F /* TidyUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TidyUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		577AF90BE7E6A9C89E90D3A3 /* TidyUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidyUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B4950D69C488EB3FDCAF390 /* TidyUpWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TidyUpWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF5871E4521A7751A0C4B913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TidyUp/Resources/Info.plist"; sourceTree = SOURCE_ROOT; };
-		5158E2FCC5ED84FC469F05A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "TidyUp/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
+		9703256CC3EA26E32771E842 /* AssetThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SimilarPhotos/AssetThumbnail.swift"; sourceTree = SOURCE_ROOT; };
+		E8F225AAA8CF7E407DC99AD8 /* CachedFeaturePrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Cache/CachedFeaturePrint.swift"; sourceTree = SOURCE_ROOT; };
+		F3C3552E5D8B00C82640AF57 /* CategoryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/CategoryRowView.swift"; sourceTree = SOURCE_ROOT; };
+		2290972462BA112928DB2491 /* CompressVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Videos/CompressVideosView.swift"; sourceTree = SOURCE_ROOT; };
+		0EFD1361FC02B611725B451A /* ContactMergePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Contacts/ContactMergePreviewView.swift"; sourceTree = SOURCE_ROOT; };
+		09B5F7E6F56DD5F24F47DEA1 /* ContactScanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/ContactScanService.swift"; sourceTree = SOURCE_ROOT; };
+		7DB894017630C16BE4B6025C /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Dashboard/DashboardView.swift"; sourceTree = SOURCE_ROOT; };
+		9E8821A3875E3A89A7F7722C /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Dashboard/DashboardViewModel.swift"; sourceTree = SOURCE_ROOT; };
+		6A4E24E8FCA0527BCB891D43 /* DeletionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/DeletionService.swift"; sourceTree = SOURCE_ROOT; };
+		6A2F119A89A9B2518DABE121 /* DuplicateContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/DuplicateContactGroup.swift"; sourceTree = SOURCE_ROOT; };
+		61FFA3F5EDB5B0C636398067 /* DuplicateContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Contacts/DuplicateContactsView.swift"; sourceTree = SOURCE_ROOT; };
+		DE3C0262EF45341540BA9182 /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SimilarPhotos/GroupDetailView.swift"; sourceTree = SOURCE_ROOT; };
+		EB5B6875DC91FA96454FC861 /* LargeVideosListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Videos/LargeVideosListView.swift"; sourceTree = SOURCE_ROOT; };
+		B7A123E9876BA56B9340B6E1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/App/MainTabView.swift"; sourceTree = SOURCE_ROOT; };
+		6019FEB79786027E2ABDFB97 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/PermissionService.swift"; sourceTree = SOURCE_ROOT; };
+		7DA703CE3D63326C05926616 /* PermissionsPrimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Permissions/PermissionsPrimerView.swift"; sourceTree = SOURCE_ROOT; };
+		41F971CB638422413BCF47E5 /* PhotoScanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/PhotoScanService.swift"; sourceTree = SOURCE_ROOT; };
+		89EF5A051D1C0285C8CC2CA8 /* RecycleBinSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Dashboard/RecycleBinSheet.swift"; sourceTree = SOURCE_ROOT; };
+		5A03806AA41D75B97E26C516 /* ReviewDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Review/ReviewDeleteView.swift"; sourceTree = SOURCE_ROOT; };
+		92634EB452FEAF4C7131555B /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Review/ReviewViewModel.swift"; sourceTree = SOURCE_ROOT; };
+		819BEC933623ABBE9EE5041C /* ScanProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/ScanProgress.swift"; sourceTree = SOURCE_ROOT; };
+		B648F68F663F1FDF1AD221E5 /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/ScanResult.swift"; sourceTree = SOURCE_ROOT; };
+		C40EE3EC156FDD736D8A9245 /* ScreenshotItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/ScreenshotItem.swift"; sourceTree = SOURCE_ROOT; };
+		A1669E475E219B859BC357F0 /* ScreenshotsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Screenshots/ScreenshotsGridView.swift"; sourceTree = SOURCE_ROOT; };
+		2A8AEA4E3740AA8047B2C38F /* SelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/SelectionStore.swift"; sourceTree = SOURCE_ROOT; };
+		F65E3AFDFA0526FE54AB23B1 /* SelectionToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/SelectionToolbar.swift"; sourceTree = SOURCE_ROOT; };
+		209E39D6ED038CE88589216C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/App/SettingsView.swift"; sourceTree = SOURCE_ROOT; };
+		1C1CA990AF0ECE5711BB58BE /* SimilarGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/SimilarGroup.swift"; sourceTree = SOURCE_ROOT; };
+		D9FA5FBA226D244969F88BEF /* SimilarPhotosListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SimilarPhotos/SimilarPhotosListView.swift"; sourceTree = SOURCE_ROOT; };
+		EA1B3E83E483C37B2BC811B2 /* SpaceFreedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/SpaceFreed/SpaceFreedView.swift"; sourceTree = SOURCE_ROOT; };
+		CE02EC5D45006C98DBF6E4AB /* StorageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/StorageRingView.swift"; sourceTree = SOURCE_ROOT; };
+		C51EF29658A6EFF9D7E1CD3F /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/StorageService.swift"; sourceTree = SOURCE_ROOT; };
+		A3057B6CABFAA6A0D2C01EA1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/DesignSystem/Theme.swift"; sourceTree = SOURCE_ROOT; };
+		395EB2C45E24DAB1CA3D78EF /* TidyUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/App/TidyUpApp.swift"; sourceTree = SOURCE_ROOT; };
+		810524CE5C7C7F79B08A7E38 /* VaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Features/Vault/VaultView.swift"; sourceTree = SOURCE_ROOT; };
+		2ECDC4E77AE3C0B92AD0D935 /* VideoCompressionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Services/VideoCompressionService.swift"; sourceTree = SOURCE_ROOT; };
+		CEFB7E09112CA6809AB0F4E7 /* VideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUp/Core/Models/VideoItem.swift"; sourceTree = SOURCE_ROOT; };
+		C24B10F5544B7F00677C1F89 /* TidyUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidyUpTests/TidyUpTests.swift"; sourceTree = SOURCE_ROOT; };
+		42678DD9A684D5B8E77B67D1 /* TidyUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TidyUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE0E0D3A8FAA4518416532C9 /* TidyUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidyUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52978C8E97EFA16553398D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TidyUp/Resources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		D7F9706FDB6153906954151B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "TidyUp/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		/* End PBXFileReference section */
 
 		/* Begin PBXFrameworksBuildPhase section */
-		C3BF291E36B7E651262F483C /* Frameworks */ = {
+		9469DD5420A55C7C98999772 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4B048D3A8F16E1DFA3FCF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F334BD03BAAF870340F0690F /* Frameworks */ = {
+		3ECC163A8F34F14BE6B6AB98 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -154,186 +111,172 @@
 		/* End PBXFrameworksBuildPhase section */
 
 		/* Begin PBXGroup section */
-		DFBD1A9E99291621996273C4 /* Products */ = {
+		08AC6572B52B92B62053949A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E5EE2F956FF2EBA9D6587F7F /* TidyUp.app */,
-				577AF90BE7E6A9C89E90D3A3 /* TidyUpTests.xctest */,
-				5B4950D69C488EB3FDCAF390 /* TidyUpWidgetExtension.appex */,
+				42678DD9A684D5B8E77B67D1 /* TidyUp.app */,
+				EE0E0D3A8FAA4518416532C9 /* TidyUpTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		03550E14D4C2A6FC56D0AD5E = {
+		02FC302D88F0C0F5308E4319 = {
 			isa = PBXGroup;
 			children = (
-				198841DFD6D7BB8D682D6D33 /* TidyUp */,
-				1AEA03DBBC45A19513D37DC8 /* TidyUpWidget */,
-				7E578991A4A4458C021C1EB4 /* TidyUpTests */,
-				DFBD1A9E99291621996273C4 /* Products */,
+				AB14251B90375AE2039F03B9 /* TidyUp */,
+				7057CA6D105EE9033D9ACE64 /* TidyUpTests */,
+				08AC6572B52B92B62053949A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		198841DFD6D7BB8D682D6D33 /* TidyUp */ = {
+		AB14251B90375AE2039F03B9 /* TidyUp */ = {
 			isa = PBXGroup;
 			children = (
-				AF5871E4521A7751A0C4B913 /* Info.plist */,
-				5158E2FCC5ED84FC469F05A3 /* Assets.xcassets */,
+				F52978C8E97EFA16553398D5 /* Info.plist */,
+				D7F9706FDB6153906954151B /* Assets.xcassets */,
 			);
 			name = TidyUp;
 			sourceTree = "<group>";
 		};
-		F47968D0DE9DA66C41801284 /* App */ = {
+		80836AA16C286908A1BFCE0B /* App */ = {
 			isa = PBXGroup;
 			children = (
-				9FDFEF337F08C8709B7F9828 /* MainTabView.swift */,
-				E7B5AE1C1848C81ECBD9FF4D /* SettingsView.swift */,
-				F078D0850B568A10595329E5 /* TidyUpApp.swift */,
+				B7A123E9876BA56B9340B6E1 /* MainTabView.swift */,
+				209E39D6ED038CE88589216C /* SettingsView.swift */,
+				395EB2C45E24DAB1CA3D78EF /* TidyUpApp.swift */,
 			);
 			name = App;
 			sourceTree = "<group>";
 		};
-		ABDA340C4AFE1F20211946FC /* Cache */ = {
+		4E2E7A6F6E6A7DD532023188 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				86B6981B13FAA2E667C7EE0A /* CachedFeaturePrint.swift */,
+				E8F225AAA8CF7E407DC99AD8 /* CachedFeaturePrint.swift */,
 			);
 			name = Cache;
 			sourceTree = "<group>";
 		};
-		AEEDDBD19F7BF0E27F2E6BAA /* Models */ = {
+		17C236D9382764DC5BA3E070 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5C40E2A7B68EBA1C674C4EFC /* DuplicateContactGroup.swift */,
-				41AAAA2B8446BAD25512047F /* ScanProgress.swift */,
-				633662AB736AC6666220B18F /* ScanResult.swift */,
-				8078EFDDDB82A4F36688B748 /* ScreenshotItem.swift */,
-				915961F5B05141EE2F2E5134 /* SelectionStore.swift */,
-				8C11C4CFD7D20F0EF20301E7 /* SimilarGroup.swift */,
-				121F54D550E84FCB4DA101BE /* VideoItem.swift */,
+				6A2F119A89A9B2518DABE121 /* DuplicateContactGroup.swift */,
+				819BEC933623ABBE9EE5041C /* ScanProgress.swift */,
+				B648F68F663F1FDF1AD221E5 /* ScanResult.swift */,
+				C40EE3EC156FDD736D8A9245 /* ScreenshotItem.swift */,
+				2A8AEA4E3740AA8047B2C38F /* SelectionStore.swift */,
+				1C1CA990AF0ECE5711BB58BE /* SimilarGroup.swift */,
+				CEFB7E09112CA6809AB0F4E7 /* VideoItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
 		};
-		24C739A4D1AE43224AF2B88A /* Services */ = {
+		972A48055DEFB57A811AC52A /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				02635F666C9C8E28F01ADB71 /* ContactScanService.swift */,
-				91C1F4E676C9110E78DFD2DF /* DeletionService.swift */,
-				3D3557567EBC88B0FC823493 /* PermissionService.swift */,
-				00C8FF46CA5151AF3F325F30 /* PhotoScanService.swift */,
-				623F7B6097F9CE10C1CFE186 /* ScanStorageIntent.swift */,
-				C4DA948AD5E58479BC8875E2 /* StorageService.swift */,
-				3C9A64BF133F1F54BF779556 /* VideoCompressionService.swift */,
-				004A8D06BCBC56D635702954 /* WidgetDataStore.swift */,
+				09B5F7E6F56DD5F24F47DEA1 /* ContactScanService.swift */,
+				6A4E24E8FCA0527BCB891D43 /* DeletionService.swift */,
+				6019FEB79786027E2ABDFB97 /* PermissionService.swift */,
+				41F971CB638422413BCF47E5 /* PhotoScanService.swift */,
+				C51EF29658A6EFF9D7E1CD3F /* StorageService.swift */,
+				2ECDC4E77AE3C0B92AD0D935 /* VideoCompressionService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
 		};
-		8F45D3DD78A3830C2D9374FC /* DesignSystem */ = {
+		8DE1D5B7EDC1A4C36863A075 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				275DAF64C1839675A8ED4F3D /* CategoryRowView.swift */,
-				C483F6DF9202B659F36DA174 /* SelectionToolbar.swift */,
-				EC44CD1FFE39CC874417CDCE /* StorageRingView.swift */,
-				48D3D0E7378684BA34F473A0 /* Theme.swift */,
+				F3C3552E5D8B00C82640AF57 /* CategoryRowView.swift */,
+				F65E3AFDFA0526FE54AB23B1 /* SelectionToolbar.swift */,
+				CE02EC5D45006C98DBF6E4AB /* StorageRingView.swift */,
+				A3057B6CABFAA6A0D2C01EA1 /* Theme.swift */,
 			);
 			name = DesignSystem;
 			sourceTree = "<group>";
 		};
-		0D18752D20C0339AA28C0CA0 /* Contacts */ = {
+		7FF66DF725946B02DE180B4D /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				B08FB3F80EFC73CB1B9B44FC /* ContactMergePreviewView.swift */,
-				92561C085F6FD7DE000B16C2 /* DuplicateContactsView.swift */,
+				0EFD1361FC02B611725B451A /* ContactMergePreviewView.swift */,
+				61FFA3F5EDB5B0C636398067 /* DuplicateContactsView.swift */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
 		};
-		6DE24013AF02573E03B8022E /* Dashboard */ = {
+		45E35617C7F43DA72EE94045 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				3EEB86E93175F32650D957C8 /* DashboardView.swift */,
-				12781BFE69A15A2FCA8283AC /* DashboardViewModel.swift */,
-				F413E9A42039487ED3DD6BE5 /* RecycleBinSheet.swift */,
+				7DB894017630C16BE4B6025C /* DashboardView.swift */,
+				9E8821A3875E3A89A7F7722C /* DashboardViewModel.swift */,
+				89EF5A051D1C0285C8CC2CA8 /* RecycleBinSheet.swift */,
 			);
 			name = Dashboard;
 			sourceTree = "<group>";
 		};
-		6E1E240C0B88FD5CCD5394EB /* Permissions */ = {
+		7BF472F61F29A51EC540CA6B /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
-				BB65FDAC4A2F53E00D05901C /* PermissionsPrimerView.swift */,
+				7DA703CE3D63326C05926616 /* PermissionsPrimerView.swift */,
 			);
 			name = Permissions;
 			sourceTree = "<group>";
 		};
-		05ED7F61F7BAA0DB345DCC50 /* Review */ = {
+		C506D09846A5D3357DAFBCD2 /* Review */ = {
 			isa = PBXGroup;
 			children = (
-				552A36B9B9F8BACA20EC3683 /* ReviewDeleteView.swift */,
-				0B0D8CA94D5B3352861A82B3 /* ReviewViewModel.swift */,
+				5A03806AA41D75B97E26C516 /* ReviewDeleteView.swift */,
+				92634EB452FEAF4C7131555B /* ReviewViewModel.swift */,
 			);
 			name = Review;
 			sourceTree = "<group>";
 		};
-		289CFC1755212335AEF45B10 /* Screenshots */ = {
+		975C5D5067C902AE3967DD1E /* Screenshots */ = {
 			isa = PBXGroup;
 			children = (
-				F076A53678DAF093E880DB60 /* ScreenshotsGridView.swift */,
+				A1669E475E219B859BC357F0 /* ScreenshotsGridView.swift */,
 			);
 			name = Screenshots;
 			sourceTree = "<group>";
 		};
-		47C8F15791D7037A91FF3F31 /* SimilarPhotos */ = {
+		BEBECB52AEEF9CA171C39693 /* SimilarPhotos */ = {
 			isa = PBXGroup;
 			children = (
-				B72413610CC984C4617D5E17 /* AssetThumbnail.swift */,
-				2BA065568B091E3EABFC4AB3 /* GroupDetailView.swift */,
-				17B987DF1FA79026204D4E0A /* SimilarPhotosListView.swift */,
+				9703256CC3EA26E32771E842 /* AssetThumbnail.swift */,
+				DE3C0262EF45341540BA9182 /* GroupDetailView.swift */,
+				D9FA5FBA226D244969F88BEF /* SimilarPhotosListView.swift */,
 			);
 			name = SimilarPhotos;
 			sourceTree = "<group>";
 		};
-		A7218D8514A7E83452F47A8A /* SpaceFreed */ = {
+		8E01504B16D1F5506F2B864C /* SpaceFreed */ = {
 			isa = PBXGroup;
 			children = (
-				6D66ED599F6A284E77ADAC50 /* SpaceFreedView.swift */,
+				EA1B3E83E483C37B2BC811B2 /* SpaceFreedView.swift */,
 			);
 			name = SpaceFreed;
 			sourceTree = "<group>";
 		};
-		5B23A732CDA2CC125B6BBA82 /* Vault */ = {
+		B1960819CB51054BAE0A3092 /* Vault */ = {
 			isa = PBXGroup;
 			children = (
-				26ABAA05864892D931AE6FC8 /* VaultView.swift */,
+				810524CE5C7C7F79B08A7E38 /* VaultView.swift */,
 			);
 			name = Vault;
 			sourceTree = "<group>";
 		};
-		D5C72E25BDE806A8A70BD497 /* Videos */ = {
+		5724FB22FFCDC4BBC2407801 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
-				11CCD7C755111CCCD3B32591 /* CompressVideosView.swift */,
-				FA49CBB60FFB4E1EFE102D68 /* LargeVideosListView.swift */,
+				2290972462BA112928DB2491 /* CompressVideosView.swift */,
+				EB5B6875DC91FA96454FC861 /* LargeVideosListView.swift */,
 			);
 			name = Videos;
 			sourceTree = "<group>";
 		};
-		1AEA03DBBC45A19513D37DC8 /* TidyUpWidget */ = {
+		7057CA6D105EE9033D9ACE64 /* TidyUpTests */ = {
 			isa = PBXGroup;
 			children = (
-				6AEE20526E1940E90FFEAEEE /* StorageWidgetView.swift */,
-				D47313BC0F240C721ACC645A /* TidyUpWidget.swift */,
-			);
-			name = TidyUpWidget;
-			path = TidyUpWidget;
-			sourceTree = "<group>";
-		};
-		7E578991A4A4458C021C1EB4 /* TidyUpTests */ = {
-			isa = PBXGroup;
-			children = (
-				EED4E2247AA7F9D099E589E3 /* TidyUpTests.swift */,
+				C24B10F5544B7F00677C1F89 /* TidyUpTests.swift */,
 			);
 			name = TidyUpTests;
 			path = TidyUpTests;
@@ -342,48 +285,29 @@
 		/* End PBXGroup section */
 
 		/* Begin PBXNativeTarget section */
-		F7D13D39A04EAD0ABC42FB8F /* TidyUp */ = {
+		C16619DA06451F3564736C24 /* TidyUp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D910B28DA267F6C60BADF204 /* Build configuration list for PBXNativeTarget TidyUp */;
+			buildConfigurationList = 423CEBA333DAF80C7FD5F56F /* Build configuration list for PBXNativeTarget TidyUp */;
 			buildPhases = (
-				BC0B759500F30DEB4E9813E3 /* Sources */,
-				C3BF291E36B7E651262F483C /* Frameworks */,
-				0427AFBBD4E6A880DFF2F93B /* Resources */,
-				21ACA46D6EEF1BFF530FF88F /* Embed Foundation Extensions */,
+				400AEC056E91BEE5110AEF0A /* Sources */,
+				9469DD5420A55C7C98999772 /* Frameworks */,
+				45A34656EE53A8F4D71332DD /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				64DFA3F31FFEEA4DC1B1807E /* PBXTargetDependency */,
 			);
 			name = TidyUp;
 			productName = TidyUp;
-			productReference = E5EE2F956FF2EBA9D6587F7F /* TidyUp.app */;
+			productReference = 42678DD9A684D5B8E77B67D1 /* TidyUp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CC8FEEF6638BB2B8533C3336 /* TidyUpWidgetExtension */ = {
+		0858A4B3ED6AB4A51006C763 /* TidyUpTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2E733B8BFBC86A8C0F0A8F8A /* Build configuration list for PBXNativeTarget TidyUpWidgetExtension */;
+			buildConfigurationList = 632C5C0628B86B5CF4BF6EF6 /* Build configuration list for PBXNativeTarget TidyUpTests */;
 			buildPhases = (
-				10E0C796392CBEA0328A525F /* Sources */,
-				F334BD03BAAF870340F0690F /* Frameworks */,
-				64F468D9FB58CE6FD28C4DF4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TidyUpWidgetExtension;
-			productName = TidyUpWidgetExtension;
-			productReference = 5B4950D69C488EB3FDCAF390 /* TidyUpWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		514978C21947EBA1EA1A1010 /* TidyUpTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 28D718FEECC2C043012CBD44 /* Build configuration list for PBXNativeTarget TidyUpTests */;
-			buildPhases = (
-				E8F40E2F4498DCD5F22D92A1 /* Sources */,
-				D4B048D3A8F16E1DFA3FCF1E /* Frameworks */,
+				CA4EE1AE3BC87BA724346F84 /* Sources */,
+				3ECC163A8F34F14BE6B6AB98 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -391,31 +315,28 @@
 			);
 			name = TidyUpTests;
 			productName = TidyUpTests;
-			productReference = 577AF90BE7E6A9C89E90D3A3 /* TidyUpTests.xctest */;
+			productReference = EE0E0D3A8FAA4518416532C9 /* TidyUpTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		/* End PBXNativeTarget section */
 
 		/* Begin PBXProject section */
-		9F92EAFAF8C67AE4BB87FBBA /* Project object */ = {
+		C302B7E623CB7C40B6A75AD7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					F7D13D39A04EAD0ABC42FB8F = {
+					C16619DA06451F3564736C24 = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					CC8FEEF6638BB2B8533C3336 = {
-						CreatedOnToolsVersion = 16.0;
-					};
-					514978C21947EBA1EA1A1010 = {
+					0858A4B3ED6AB4A51006C763 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = 82857C72A0D033FE718CC98A /* Build configuration list for PBXProject TidyUp */;
+			buildConfigurationList = C9D5733239CAE0BE2E52495F /* Build configuration list for PBXProject TidyUp */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -423,114 +344,85 @@
 				en,
 				Base,
 			);
-			mainGroup = 03550E14D4C2A6FC56D0AD5E;
-			productRefGroup = DFBD1A9E99291621996273C4 /* Products */;
+			mainGroup = 02FC302D88F0C0F5308E4319;
+			productRefGroup = 08AC6572B52B92B62053949A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F7D13D39A04EAD0ABC42FB8F /* TidyUp */,
-				CC8FEEF6638BB2B8533C3336 /* TidyUpWidgetExtension */,
-				514978C21947EBA1EA1A1010 /* TidyUpTests */,
+				C16619DA06451F3564736C24 /* TidyUp */,
+				0858A4B3ED6AB4A51006C763 /* TidyUpTests */,
 			);
 		};
 		/* End PBXProject section */
 
 		/* Begin PBXResourcesBuildPhase section */
-		0427AFBBD4E6A880DFF2F93B /* Resources */ = {
+		45A34656EE53A8F4D71332DD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C266A102601D5B04F4CB2A7 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		64F468D9FB58CE6FD28C4DF4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				8FD060900D062608DA4CA3FE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		/* End PBXResourcesBuildPhase section */
 
 		/* Begin PBXSourcesBuildPhase section */
-		BC0B759500F30DEB4E9813E3 /* Sources */ = {
+		400AEC056E91BEE5110AEF0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADDD156E6DBD2ADD288AC675 /* AssetThumbnail.swift in Sources */,
-				26FB5961EBAC913E04D706C2 /* CachedFeaturePrint.swift in Sources */,
-				8A25696A82130B5343263EBA /* CategoryRowView.swift in Sources */,
-				1C499C32F86B158D39A5C11D /* CompressVideosView.swift in Sources */,
-				65A2604F2727E52993960199 /* ContactMergePreviewView.swift in Sources */,
-				06A7F8906FA054DDE0C3874A /* ContactScanService.swift in Sources */,
-				22D985BA5308BC4F630C5CA8 /* DashboardView.swift in Sources */,
-				B6C54A435CAB0AE59E40CE13 /* DashboardViewModel.swift in Sources */,
-				1A0A579735BF8FEC25DFAC8F /* DeletionService.swift in Sources */,
-				3E575E3DE98466F78B6CB34C /* DuplicateContactGroup.swift in Sources */,
-				D864A300D50D5EB5CEB38079 /* DuplicateContactsView.swift in Sources */,
-				F170D680FE70F00F13F94255 /* GroupDetailView.swift in Sources */,
-				81B68BEF579C598D77ACDCD4 /* LargeVideosListView.swift in Sources */,
-				82A0C729BD36F32F08C5ADE7 /* MainTabView.swift in Sources */,
-				BBA2EA8B3245304F12D604FC /* PermissionService.swift in Sources */,
-				6A1C251BF990069CC35767C5 /* PermissionsPrimerView.swift in Sources */,
-				9FCEAA58FF56EF37612C00F3 /* PhotoScanService.swift in Sources */,
-				74578AD6C50E171FCC08D3EF /* RecycleBinSheet.swift in Sources */,
-				304B93011D8F6FEDFBDB7DE5 /* ReviewDeleteView.swift in Sources */,
-				EC61C7A52EA81CBCEC2B287B /* ReviewViewModel.swift in Sources */,
-				30118F44ADC9172D381046BE /* ScanProgress.swift in Sources */,
-				BFAAC0CB01039F2C12B438C9 /* ScanResult.swift in Sources */,
-				00DE14366FCFD4CB7DA91F84 /* ScanStorageIntent.swift in Sources */,
-				0EAB4EC8951214D3CC075503 /* ScreenshotItem.swift in Sources */,
-				E27FCBF4C6036BF7275D88FD /* ScreenshotsGridView.swift in Sources */,
-				B695289D1DB5BE0952962AA8 /* SelectionStore.swift in Sources */,
-				4485E8E13A045448AA6F0658 /* SelectionToolbar.swift in Sources */,
-				FECBEEFD307C244B7B73C581 /* SettingsView.swift in Sources */,
-				E417B0E88B8110F139B343DF /* SimilarGroup.swift in Sources */,
-				25EEE0615BE046063EA54344 /* SimilarPhotosListView.swift in Sources */,
-				22D18181EF2F18DDDA017ECA /* SpaceFreedView.swift in Sources */,
-				FBF619C1264821F0D1EF5CAD /* StorageRingView.swift in Sources */,
-				CD294B03FBE8B85C8BDF1568 /* StorageService.swift in Sources */,
-				3DBE88477A4CD96D56D7EAA0 /* Theme.swift in Sources */,
-				6CA3F54ED2F45D9A6B76F4EE /* TidyUpApp.swift in Sources */,
-				8B2BD359D0835F1990D20980 /* VaultView.swift in Sources */,
-				4503BBFDA10B0D3AC87777D2 /* VideoCompressionService.swift in Sources */,
-				903815D3AB7B1C5DC5A016BE /* VideoItem.swift in Sources */,
-				9E0A3BB1F6D3CDE257F928D2 /* WidgetDataStore.swift in Sources */,
+				9EAC1EF7FDC7DB927A1EC911 /* AssetThumbnail.swift in Sources */,
+				6CEB1A0B1AC42B46D07385B8 /* CachedFeaturePrint.swift in Sources */,
+				06AD0925F925527A83BF3BB8 /* CategoryRowView.swift in Sources */,
+				26016D84B30B1A5B08993C4E /* CompressVideosView.swift in Sources */,
+				97E3CA6B60E454F8BD9705E1 /* ContactMergePreviewView.swift in Sources */,
+				401112D56A69178C95F36058 /* ContactScanService.swift in Sources */,
+				0D470858EC6D9240AD3F5461 /* DashboardView.swift in Sources */,
+				BE8ADA7BBEA35E1424298FE1 /* DashboardViewModel.swift in Sources */,
+				2EB2C09BE5C6480E78B7C728 /* DeletionService.swift in Sources */,
+				2F0ADA097CF748B5A610C71E /* DuplicateContactGroup.swift in Sources */,
+				41676135FBE555AC3B3A6C2F /* DuplicateContactsView.swift in Sources */,
+				5DABCF5B3FCDB695BDE04DF0 /* GroupDetailView.swift in Sources */,
+				2F9066529F7B192AE10754FF /* LargeVideosListView.swift in Sources */,
+				A312624A96355D6FF48885C2 /* MainTabView.swift in Sources */,
+				4CE1C500AB5379A309977246 /* PermissionService.swift in Sources */,
+				7A6FB75DD27E6A28B589D33B /* PermissionsPrimerView.swift in Sources */,
+				4F8371EA6E6BF2176DB8A259 /* PhotoScanService.swift in Sources */,
+				C2E1680D40D53DE5874A5CF5 /* RecycleBinSheet.swift in Sources */,
+				740F712579A1B87E0CAC3481 /* ReviewDeleteView.swift in Sources */,
+				43469F183D58FF702DA784A9 /* ReviewViewModel.swift in Sources */,
+				042C77A1C8A29E853B2FA545 /* ScanProgress.swift in Sources */,
+				428323333AF67B167193F4AC /* ScanResult.swift in Sources */,
+				78046B4657AC01F4B558C117 /* ScreenshotItem.swift in Sources */,
+				0871ADC6C403F4E30DC149E9 /* ScreenshotsGridView.swift in Sources */,
+				6BF74D2405B368F749FACB8B /* SelectionStore.swift in Sources */,
+				EAD05C63808301158728689A /* SelectionToolbar.swift in Sources */,
+				78634C0B75265F6AB3B74861 /* SettingsView.swift in Sources */,
+				883980FEB9E76F5F3B0EB4A1 /* SimilarGroup.swift in Sources */,
+				52AB055B4A69CF02E79028B8 /* SimilarPhotosListView.swift in Sources */,
+				D1A468C6332B755C8DA4B6AD /* SpaceFreedView.swift in Sources */,
+				1A69CDDF93978ACF1C9A4411 /* StorageRingView.swift in Sources */,
+				1061609175A5DD30FDD087E3 /* StorageService.swift in Sources */,
+				BC30C57B47043EC95848F093 /* Theme.swift in Sources */,
+				F778EDFE5DFF50D60E1E32F3 /* TidyUpApp.swift in Sources */,
+				AB7BAA79605AF4CAE52F5910 /* VaultView.swift in Sources */,
+				B42223B5D41C1A338CCB4870 /* VideoCompressionService.swift in Sources */,
+				860BD2210D3C3CF73935516C /* VideoItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10E0C796392CBEA0328A525F /* Sources */ = {
+		CA4EE1AE3BC87BA724346F84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6658AD360ED28D5C62DE963 /* StorageWidgetView.swift in Sources */,
-				43283887CC80A6A404014E10 /* TidyUpWidget.swift in Sources */,
-				1DE9C7C5634F4035E4FABFE3 /* ScanStorageIntent.swift in Sources */,
-				4F2856516CFA64A1933B6FE7 /* WidgetDataStore.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E8F40E2F4498DCD5F22D92A1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D6E0BF292A5522C101BAF515 /* TidyUpTests.swift in Sources */,
+				18190583018F9702EA01A7EF /* TidyUpTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		/* End PBXSourcesBuildPhase section */
 
-		/* Begin PBXTargetDependency section */
-		64DFA3F31FFEEA4DC1B1807E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC8FEEF6638BB2B8533C3336 /* TidyUpWidgetExtension */;
-			targetProxy = 3D8D47EF0A0F54E0545E373F /* PBXContainerItemProxy */;
-		};
-		/* End PBXTargetDependency section */
-
 		/* Begin XCBuildConfiguration section */
-		0E0386FC7814D5A6D4A5EB1B /* Debug */ = {
+		D78AB5435E884C23838E9EC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -585,7 +477,7 @@
 			};
 			name = Debug;
 		};
-		2F9D04B86F935606980DA9D2 /* Release */ = {
+		26C42CDED2BF2FF4925C32A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -635,14 +527,14 @@
 			};
 			name = Release;
 		};
-		6CA5B3911F16AF43E47AC2B9 /* Debug */ = {
+		4622875C7172C6887ECD5CF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8WJQ6SJ678;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TidyUp/Resources/Info.plist";
 				INFOPLIST_KEY_NSContactsUsageDescription = "TidyUp needs Contacts access to find and merge duplicate contacts on your device.";
@@ -661,14 +553,14 @@
 			};
 			name = Debug;
 		};
-		64B465665C880F271E801CFE /* Release */ = {
+		F8F4D540413FE653717ADAF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8WJQ6SJ678;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TidyUp/Resources/Info.plist";
 				INFOPLIST_KEY_NSContactsUsageDescription = "TidyUp needs Contacts access to find and merge duplicate contacts on your device.";
@@ -687,54 +579,13 @@
 			};
 			name = Release;
 		};
-		31AAA53D46FB2591FAB39122 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "TidyUp Storage";
-				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tidyup.app.TidyUpWidget";
-				PRODUCT_NAME = TidyUpWidgetExtension;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		686405EFACC0E4C98ED17B48 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "TidyUp Storage";
-				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tidyup.app.TidyUpWidget";
-				PRODUCT_NAME = TidyUpWidgetExtension;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		2A701D264CF9C2CD9B8B61C5 /* Debug */ = {
+		128DDB92D9C3E9ACBD2EA81B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8WJQ6SJ678;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
@@ -746,12 +597,13 @@
 			};
 			name = Debug;
 		};
-		5F952F494D4B90D183FD80F8 /* Release */ = {
+		5DC397716D27C72367ABDFE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8WJQ6SJ678;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
@@ -766,38 +618,29 @@
 		/* End XCBuildConfiguration section */
 
 		/* Begin XCConfigurationList section */
-		82857C72A0D033FE718CC98A /* Build configuration list for PBXProject TidyUp */ = {
+		C9D5733239CAE0BE2E52495F /* Build configuration list for PBXProject TidyUp */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0E0386FC7814D5A6D4A5EB1B /* Debug */,
-				2F9D04B86F935606980DA9D2 /* Release */,
+				D78AB5435E884C23838E9EC3 /* Debug */,
+				26C42CDED2BF2FF4925C32A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D910B28DA267F6C60BADF204 /* Build configuration list for PBXNativeTarget TidyUp */ = {
+		423CEBA333DAF80C7FD5F56F /* Build configuration list for PBXNativeTarget TidyUp */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6CA5B3911F16AF43E47AC2B9 /* Debug */,
-				64B465665C880F271E801CFE /* Release */,
+				4622875C7172C6887ECD5CF3 /* Debug */,
+				F8F4D540413FE653717ADAF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E733B8BFBC86A8C0F0A8F8A /* Build configuration list for PBXNativeTarget TidyUpWidgetExtension */ = {
+		632C5C0628B86B5CF4BF6EF6 /* Build configuration list for PBXNativeTarget TidyUpTests */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				31AAA53D46FB2591FAB39122 /* Debug */,
-				686405EFACC0E4C98ED17B48 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		28D718FEECC2C043012CBD44 /* Build configuration list for PBXNativeTarget TidyUpTests */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2A701D264CF9C2CD9B8B61C5 /* Debug */,
-				5F952F494D4B90D183FD80F8 /* Release */,
+				128DDB92D9C3E9ACBD2EA81B /* Debug */,
+				5DC397716D27C72367ABDFE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -805,5 +648,5 @@
 		/* End XCConfigurationList section */
 
 	};
-	rootObject = 9F92EAFAF8C67AE4BB87FBBA /* Project object */;
+	rootObject = C302B7E623CB7C40B6A75AD7 /* Project object */;
 }

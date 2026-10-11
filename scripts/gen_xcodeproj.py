@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Generates a complete TidyUp.xcodeproj/project.pbxproj with App, Test, and Widget Extension targets.
+Generates a minimal but complete TidyUp.xcodeproj/project.pbxproj.
 Run from the /Users/light/Documents/projects/tidyup directory.
 """
 
-import os, uuid, hashlib, collections
+import os, uuid, hashlib
 
 # ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -17,7 +17,6 @@ def new_id():
 BASE = "/Users/light/Documents/projects/tidyup"
 SRC_ROOT = os.path.join(BASE, "TidyUp")
 TEST_ROOT = os.path.join(BASE, "TidyUpTests")
-WIDGET_ROOT = os.path.join(BASE, "TidyUpWidget")
 
 def collect_swift(directory):
     files = []
@@ -29,53 +28,38 @@ def collect_swift(directory):
                 files.append((f, rel_path, abs_path))
     return sorted(files)
 
-main_files   = collect_swift(SRC_ROOT)
-test_files   = collect_swift(TEST_ROOT)
-widget_files = collect_swift(WIDGET_ROOT)
+main_files  = collect_swift(SRC_ROOT)
+test_files  = collect_swift(TEST_ROOT)
 
 # ─── assign stable IDs ───────────────────────────────────────────────────────
 
+# Top-level IDs
 PROJECT_ID          = new_id()
 MAIN_GROUP_ID       = new_id()
 PRODUCTS_GROUP_ID   = new_id()
 
 TARGET_APP_ID       = new_id()
 TARGET_TEST_ID      = new_id()
-TARGET_WIDGET_ID    = new_id()
 
-CONFIG_LIST_PROJ_ID   = new_id()
-CONFIG_LIST_APP_ID    = new_id()
-CONFIG_LIST_TEST_ID   = new_id()
-CONFIG_LIST_WIDGET_ID = new_id()
+CONFIG_LIST_PROJ_ID = new_id()
+CONFIG_LIST_APP_ID  = new_id()
+CONFIG_LIST_TEST_ID = new_id()
 
-CONFIG_DEBUG_PROJ     = new_id()
-CONFIG_RELEASE_PROJ   = new_id()
-CONFIG_DEBUG_APP      = new_id()
-CONFIG_RELEASE_APP    = new_id()
-CONFIG_DEBUG_TEST     = new_id()
-CONFIG_RELEASE_TEST   = new_id()
-CONFIG_DEBUG_WIDGET   = new_id()
-CONFIG_RELEASE_WIDGET = new_id()
+CONFIG_DEBUG_PROJ   = new_id()
+CONFIG_RELEASE_PROJ = new_id()
+CONFIG_DEBUG_APP    = new_id()
+CONFIG_RELEASE_APP  = new_id()
+CONFIG_DEBUG_TEST   = new_id()
+CONFIG_RELEASE_TEST = new_id()
 
-BUILD_PHASE_SOURCES_APP     = new_id()
-BUILD_PHASE_FWORKS_APP      = new_id()
-BUILD_PHASE_RESOURCES_APP   = new_id()
-BUILD_PHASE_EMBED_WIDGET    = new_id()
-
-BUILD_PHASE_SOURCES_TEST    = new_id()
-BUILD_PHASE_FWORKS_TEST     = new_id()
-
-BUILD_PHASE_SOURCES_WIDGET  = new_id()
-BUILD_PHASE_FWORKS_WIDGET   = new_id()
-BUILD_PHASE_RESOURCES_WIDGET = new_id()
+BUILD_PHASE_SOURCES_APP  = new_id()
+BUILD_PHASE_FWORKS_APP   = new_id()
+BUILD_PHASE_RESOURCES_APP = new_id()
+BUILD_PHASE_SOURCES_TEST = new_id()
+BUILD_PHASE_FWORKS_TEST  = new_id()
 
 APP_PRODUCT_ID      = new_id()
 TEST_PRODUCT_ID     = new_id()
-WIDGET_PRODUCT_ID   = new_id()
-
-WIDGET_EMBED_BF_ID  = new_id()
-CONTAINER_PROXY_ID  = new_id()
-TARGET_DEP_ID       = new_id()
 
 INFOPLIST_FILE_REF  = new_id()
 ASSETS_FILE_REF     = new_id()
@@ -85,20 +69,11 @@ ASSETS_BUILD_FILE   = new_id()
 def make_file_ids(files):
     return {rel: (new_id(), new_id()) for _, rel, _ in files}
 
-main_ids   = make_file_ids(main_files)
-test_ids   = make_file_ids(test_files)
-widget_ids = make_file_ids(widget_files)
-
-# Extra build file IDs for files shared into Widget target
-shared_widget_bf_ids = {}
-for fname, rel, _ in main_files:
-    if fname in ("WidgetDataStore.swift", "ScanStorageIntent.swift"):
-        shared_widget_bf_ids[rel] = new_id()
+main_ids = make_file_ids(main_files)
+test_ids = make_file_ids(test_files)
 
 # Group IDs for folder structure
 TIDYUP_GROUP_ID     = new_id()
-WIDGET_GROUP_ID     = new_id()
-TEST_GROUP_ID       = new_id()
 
 # ─── write pbxproj ───────────────────────────────────────────────────────────
 
@@ -128,50 +103,9 @@ for fname, rel, _ in main_files:
 for fname, rel, _ in test_files:
     fref_id, bf_id = test_ids[rel]
     s(2, f"{bf_id} /* {fname} in Sources */ = {{isa = PBXBuildFile; fileRef = {fref_id} /* {fname} */; }};")
-for fname, rel, _ in widget_files:
-    fref_id, bf_id = widget_ids[rel]
-    s(2, f"{bf_id} /* {fname} in Sources */ = {{isa = PBXBuildFile; fileRef = {fref_id} /* {fname} */; }};")
-
-# Shared source build files for widget
-for rel, bf_id in shared_widget_bf_ids.items():
-    fref_id, _ = main_ids[rel]
-    fname = os.path.basename(rel)
-    s(2, f"{bf_id} /* {fname} in Sources */ = {{isa = PBXBuildFile; fileRef = {fref_id} /* {fname} */; }};")
-
 # Assets
 s(2, f"{ASSETS_BUILD_FILE} /* Assets.xcassets in Resources */ = {{isa = PBXBuildFile; fileRef = {ASSETS_FILE_REF} /* Assets.xcassets */; }};")
-
-# Embed widget extension in App
-s(2, f"{WIDGET_EMBED_BF_ID} /* TidyUpWidgetExtension.appex in Embed Foundation Extensions */ = {{isa = PBXBuildFile; fileRef = {WIDGET_PRODUCT_ID} /* TidyUpWidgetExtension.appex */; settings = {{ATTRIBUTES = (RemoveHeadersOnCopy, ); }}; }};")
 s(2, "/* End PBXBuildFile section */")
-s(0)
-
-# ── PBXContainerItemProxy ───────────────────────────────────────────────────
-s(2, "/* Begin PBXContainerItemProxy section */")
-s(2, f"{CONTAINER_PROXY_ID} /* PBXContainerItemProxy */ = {{")
-s(3, "isa = PBXContainerItemProxy;")
-s(3, f"containerPortal = {PROJECT_ID} /* Project object */;")
-s(3, "proxyType = 1;")
-s(3, f"remoteGlobalIDString = {TARGET_WIDGET_ID};")
-s(3, "remoteInfo = TidyUpWidgetExtension;")
-s(2, "};")
-s(2, "/* End PBXContainerItemProxy section */")
-s(0)
-
-# ── PBXCopyFilesBuildPhase ───────────────────────────────────────────────────
-s(2, "/* Begin PBXCopyFilesBuildPhase section */")
-s(2, f"{BUILD_PHASE_EMBED_WIDGET} /* Embed Foundation Extensions */ = {{")
-s(3, "isa = PBXCopyFilesBuildPhase;")
-s(3, "buildActionMask = 2147483647;")
-s(3, 'dstPath = "";')
-s(3, "dstSubfolderSpec = 13;")
-s(3, "files = (")
-s(4, f"{WIDGET_EMBED_BF_ID} /* TidyUpWidgetExtension.appex in Embed Foundation Extensions */,")
-s(3, ");")
-s(3, 'name = "Embed Foundation Extensions";')
-s(3, "runOnlyForDeploymentPostprocessing = 0;")
-s(2, "};")
-s(2, "/* End PBXCopyFilesBuildPhase section */")
 s(0)
 
 # ── PBXFileReference ────────────────────────────────────────────────────────
@@ -182,19 +116,12 @@ for fname, rel, _ in main_files:
 for fname, rel, _ in test_files:
     fref_id, _ = test_ids[rel]
     s(2, f'{fref_id} /* {fname} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(rel)}; sourceTree = SOURCE_ROOT; }};')
-for fname, rel, _ in widget_files:
-    fref_id, _ = widget_ids[rel]
-    s(2, f'{fref_id} /* {fname} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(rel)}; sourceTree = SOURCE_ROOT; }};')
-
-# Products
+# App product
 s(2, f'{APP_PRODUCT_ID} /* TidyUp.app */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TidyUp.app; sourceTree = BUILT_PRODUCTS_DIR; }};')
 s(2, f'{TEST_PRODUCT_ID} /* TidyUpTests.xctest */ = {{isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidyUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; }};')
-s(2, f'{WIDGET_PRODUCT_ID} /* TidyUpWidgetExtension.appex */ = {{isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TidyUpWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; }};')
-
-# Resources
+# Info.plist
 s(2, f'{INFOPLIST_FILE_REF} /* Info.plist */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TidyUp/Resources/Info.plist"; sourceTree = SOURCE_ROOT; }};')
 s(2, f'{ASSETS_FILE_REF} /* Assets.xcassets */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "TidyUp/Assets.xcassets"; sourceTree = SOURCE_ROOT; }};')
-
 s(2, "/* End PBXFileReference section */")
 s(0)
 
@@ -207,16 +134,7 @@ s(3, "files = (")
 s(3, ");")
 s(3, "runOnlyForDeploymentPostprocessing = 0;")
 s(2, "};")
-
 s(2, f"{BUILD_PHASE_FWORKS_TEST} /* Frameworks */ = {{")
-s(3, "isa = PBXFrameworksBuildPhase;")
-s(3, "buildActionMask = 2147483647;")
-s(3, "files = (")
-s(3, ");")
-s(3, "runOnlyForDeploymentPostprocessing = 0;")
-s(2, "};")
-
-s(2, f"{BUILD_PHASE_FWORKS_WIDGET} /* Frameworks */ = {{")
 s(3, "isa = PBXFrameworksBuildPhase;")
 s(3, "buildActionMask = 2147483647;")
 s(3, "files = (")
@@ -227,12 +145,21 @@ s(2, "/* End PBXFrameworksBuildPhase section */")
 s(0)
 
 # ── PBXGroup ─────────────────────────────────────────────────────────────────
+# Recursive group builder — group by directory
+import collections
+
 def build_group_tree(files, root_label, root_id):
+    """
+    Returns a dict of group_id -> (label, parent_path, [child_ids])
+    where child_ids are either file ref IDs or sub-group IDs.
+    """
+    # Collect directories
     dir_to_files = collections.defaultdict(list)
     for fname, rel, _ in files:
         reldir = os.path.relpath(os.path.dirname(rel), "TidyUp")
         dir_to_files[reldir].append((fname, rel))
 
+    # Assign IDs per directory
     dir_ids = {".": root_id}
     for d in sorted(dir_to_files.keys()):
         if d != ".":
@@ -250,7 +177,6 @@ s(3, "isa = PBXGroup;")
 s(3, "children = (")
 s(4, f"{APP_PRODUCT_ID} /* TidyUp.app */,")
 s(4, f"{TEST_PRODUCT_ID} /* TidyUpTests.xctest */,")
-s(4, f"{WIDGET_PRODUCT_ID} /* TidyUpWidgetExtension.appex */,")
 s(3, ");")
 s(3, 'name = Products;')
 s(3, 'sourceTree = "<group>";')
@@ -261,7 +187,9 @@ s(2, f"{MAIN_GROUP_ID} = {{")
 s(3, "isa = PBXGroup;")
 s(3, "children = (")
 s(4, f"{TIDYUP_GROUP_ID} /* TidyUp */,")
-s(4, f"{WIDGET_GROUP_ID} /* TidyUpWidget */,")
+
+# Test group
+TEST_GROUP_ID = new_id()
 s(4, f"{TEST_GROUP_ID} /* TidyUpTests */,")
 s(4, f"{PRODUCTS_GROUP_ID} /* Products */,")
 s(3, ");")
@@ -269,12 +197,16 @@ s(3, 'sourceTree = "<group>";')
 s(2, "};")
 
 # TidyUp source group — emit sub-groups
+visited_dirs = set()
+
 def emit_group(dirpath, group_id, files_in_dir, all_dir_ids, all_dir_files, all_file_ids, base_label):
     children = []
+    # Add subdirectory groups
     for d, gid in sorted(all_dir_ids.items()):
         parent = os.path.dirname(d)
         if parent == dirpath and d != dirpath:
             children.append((gid, os.path.basename(d)))
+    # Add files in this dir
     for fname, rel in sorted(files_in_dir.get(dirpath, [])):
         fref_id, _ = all_file_ids[rel]
         children.append((fref_id, fname))
@@ -294,29 +226,18 @@ def emit_group(dirpath, group_id, files_in_dir, all_dir_ids, all_dir_files, all_
     s(3, 'sourceTree = "<group>";')
     s(2, "};")
 
+# Emit all TidyUp groups
 all_dirs = set(main_dir_ids.keys())
 for d in sorted(all_dirs):
     emit_group(d, main_dir_ids[d], main_dir_files, main_dir_ids, main_dir_files, main_ids, "TidyUp")
 
-# Widget group
-s(2, f"{WIDGET_GROUP_ID} /* TidyUpWidget */ = {{")
-s(3, "isa = PBXGroup;")
-s(3, "children = (")
-for fname, rel, _ in widget_files:
-    fref_id, _ = widget_ids[rel]
-    s(4, f"{fref_id} /* {fname} */,")
-s(3, ");")
-s(3, 'name = TidyUpWidget;')
-s(3, 'path = TidyUpWidget;')
-s(3, 'sourceTree = "<group>";')
-s(2, "};")
-
 # Test group
+test_file_ids = test_ids
 s(2, f"{TEST_GROUP_ID} /* TidyUpTests */ = {{")
 s(3, "isa = PBXGroup;")
 s(3, "children = (")
 for fname, rel, _ in test_files:
-    fref_id, _ = test_ids[rel]
+    fref_id, _ = test_file_ids[rel]
     s(4, f"{fref_id} /* {fname} */,")
 s(3, ");")
 s(3, 'name = TidyUpTests;')
@@ -330,7 +251,6 @@ s(0)
 # ── PBXNativeTarget ──────────────────────────────────────────────────────────
 s(2, "/* Begin PBXNativeTarget section */")
 
-# App target
 s(2, f"{TARGET_APP_ID} /* TidyUp */ = {{")
 s(3, "isa = PBXNativeTarget;")
 s(3, f"buildConfigurationList = {CONFIG_LIST_APP_ID} /* Build configuration list for PBXNativeTarget TidyUp */;")
@@ -338,12 +258,10 @@ s(3, "buildPhases = (")
 s(4, f"{BUILD_PHASE_SOURCES_APP} /* Sources */,")
 s(4, f"{BUILD_PHASE_FWORKS_APP} /* Frameworks */,")
 s(4, f"{BUILD_PHASE_RESOURCES_APP} /* Resources */,")
-s(4, f"{BUILD_PHASE_EMBED_WIDGET} /* Embed Foundation Extensions */,")
 s(3, ");")
 s(3, "buildRules = (")
 s(3, ");")
 s(3, "dependencies = (")
-s(4, f"{TARGET_DEP_ID} /* PBXTargetDependency */,")
 s(3, ");")
 s(3, 'name = TidyUp;')
 s(3, 'productName = TidyUp;')
@@ -351,26 +269,6 @@ s(3, f"productReference = {APP_PRODUCT_ID} /* TidyUp.app */;")
 s(3, 'productType = "com.apple.product-type.application";')
 s(2, "};")
 
-# Widget target
-s(2, f"{TARGET_WIDGET_ID} /* TidyUpWidgetExtension */ = {{")
-s(3, "isa = PBXNativeTarget;")
-s(3, f"buildConfigurationList = {CONFIG_LIST_WIDGET_ID} /* Build configuration list for PBXNativeTarget TidyUpWidgetExtension */;")
-s(3, "buildPhases = (")
-s(4, f"{BUILD_PHASE_SOURCES_WIDGET} /* Sources */,")
-s(4, f"{BUILD_PHASE_FWORKS_WIDGET} /* Frameworks */,")
-s(4, f"{BUILD_PHASE_RESOURCES_WIDGET} /* Resources */,")
-s(3, ");")
-s(3, "buildRules = (")
-s(3, ");")
-s(3, "dependencies = (")
-s(3, ");")
-s(3, 'name = TidyUpWidgetExtension;')
-s(3, 'productName = TidyUpWidgetExtension;')
-s(3, f"productReference = {WIDGET_PRODUCT_ID} /* TidyUpWidgetExtension.appex */;")
-s(3, 'productType = "com.apple.product-type.app-extension";')
-s(2, "};")
-
-# Test target
 s(2, f"{TARGET_TEST_ID} /* TidyUpTests */ = {{")
 s(3, "isa = PBXNativeTarget;")
 s(3, f"buildConfigurationList = {CONFIG_LIST_TEST_ID} /* Build configuration list for PBXNativeTarget TidyUpTests */;")
@@ -403,9 +301,6 @@ s(4, "TargetAttributes = {")
 s(5, f"{TARGET_APP_ID} = {{")
 s(6, "CreatedOnToolsVersion = 16.0;")
 s(5, "};")
-s(5, f"{TARGET_WIDGET_ID} = {{")
-s(6, "CreatedOnToolsVersion = 16.0;")
-s(5, "};")
 s(5, f"{TARGET_TEST_ID} = {{")
 s(6, "CreatedOnToolsVersion = 16.0;")
 s(5, "};")
@@ -425,7 +320,6 @@ s(3, 'projectDirPath = "";')
 s(3, 'projectRoot = "";')
 s(3, 'targets = (')
 s(4, f'{TARGET_APP_ID} /* TidyUp */,')
-s(4, f'{TARGET_WIDGET_ID} /* TidyUpWidgetExtension */,')
 s(4, f'{TARGET_TEST_ID} /* TidyUpTests */,')
 s(3, ');')
 s(2, "};")
@@ -442,21 +336,12 @@ s(4, f"{ASSETS_BUILD_FILE} /* Assets.xcassets in Resources */,")
 s(3, ");")
 s(3, "runOnlyForDeploymentPostprocessing = 0;")
 s(2, "};")
-
-s(2, f"{BUILD_PHASE_RESOURCES_WIDGET} /* Resources */ = {{")
-s(3, "isa = PBXResourcesBuildPhase;")
-s(3, "buildActionMask = 2147483647;")
-s(3, "files = (")
-s(3, ");")
-s(3, "runOnlyForDeploymentPostprocessing = 0;")
-s(2, "};")
 s(2, "/* End PBXResourcesBuildPhase section */")
 s(0)
 
 # ── PBXSourcesBuildPhase ─────────────────────────────────────────────────────
 s(2, "/* Begin PBXSourcesBuildPhase section */")
 
-# App sources
 s(2, f"{BUILD_PHASE_SOURCES_APP} /* Sources */ = {{")
 s(3, "isa = PBXSourcesBuildPhase;")
 s(3, "buildActionMask = 2147483647;")
@@ -468,22 +353,6 @@ s(3, ");")
 s(3, "runOnlyForDeploymentPostprocessing = 0;")
 s(2, "};")
 
-# Widget sources
-s(2, f"{BUILD_PHASE_SOURCES_WIDGET} /* Sources */ = {{")
-s(3, "isa = PBXSourcesBuildPhase;")
-s(3, "buildActionMask = 2147483647;")
-s(3, "files = (")
-for fname, rel, _ in widget_files:
-    _, bf_id = widget_ids[rel]
-    s(4, f"{bf_id} /* {fname} in Sources */,")
-for rel, bf_id in shared_widget_bf_ids.items():
-    fname = os.path.basename(rel)
-    s(4, f"{bf_id} /* {fname} in Sources */,")
-s(3, ");")
-s(3, "runOnlyForDeploymentPostprocessing = 0;")
-s(2, "};")
-
-# Test sources
 s(2, f"{BUILD_PHASE_SOURCES_TEST} /* Sources */ = {{")
 s(3, "isa = PBXSourcesBuildPhase;")
 s(3, "buildActionMask = 2147483647;")
@@ -498,28 +367,18 @@ s(2, "};")
 s(2, "/* End PBXSourcesBuildPhase section */")
 s(0)
 
-# ── PBXTargetDependency ──────────────────────────────────────────────────────
-s(2, "/* Begin PBXTargetDependency section */")
-s(2, f"{TARGET_DEP_ID} /* PBXTargetDependency */ = {{")
-s(3, "isa = PBXTargetDependency;")
-s(3, f"target = {TARGET_WIDGET_ID} /* TidyUpWidgetExtension */;")
-s(3, f"targetProxy = {CONTAINER_PROXY_ID} /* PBXContainerItemProxy */;")
-s(2, "};")
-s(2, "/* End PBXTargetDependency section */")
-s(0)
-
 # ── XCBuildConfiguration ─────────────────────────────────────────────────────
 
-def emit_config(cfg_id, name, target_type):
+def emit_config(cfg_id, name, is_app, is_test=False):
     s(2, f"{cfg_id} /* {name} */ = {{")
     s(3, "isa = XCBuildConfiguration;")
     s(3, "buildSettings = {")
-    if target_type == "app":
+    if is_app:
         s(4, 'ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;')
         s(4, 'ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;')
         s(4, 'CODE_SIGN_STYLE = Automatic;')
         s(4, 'CURRENT_PROJECT_VERSION = 1;')
-        s(4, 'DEVELOPMENT_TEAM = "";')
+        s(4, 'DEVELOPMENT_TEAM = 8WJQ6SJ678;')
         s(4, 'GENERATE_INFOPLIST_FILE = YES;')
         s(4, 'INFOPLIST_FILE = "TidyUp/Resources/Info.plist";')
         s(4, 'INFOPLIST_KEY_NSContactsUsageDescription = "TidyUp needs Contacts access to find and merge duplicate contacts on your device.";')
@@ -535,26 +394,11 @@ def emit_config(cfg_id, name, target_type):
         s(4, 'SWIFT_EMIT_LOC_STRINGS = YES;')
         s(4, 'SWIFT_VERSION = 6.0;')
         s(4, 'TARGETED_DEVICE_FAMILY = 1;')
-    elif target_type == "widget":
-        s(4, 'CLANG_ENABLE_MODULES = YES;')
-        s(4, 'CODE_SIGN_STYLE = Automatic;')
-        s(4, 'CURRENT_PROJECT_VERSION = 1;')
-        s(4, 'DEVELOPMENT_TEAM = "";')
-        s(4, 'GENERATE_INFOPLIST_FILE = YES;')
-        s(4, 'INFOPLIST_KEY_CFBundleDisplayName = "TidyUp Storage";')
-        s(4, 'INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";')
-        s(4, 'IPHONEOS_DEPLOYMENT_TARGET = 26.0;')
-        s(4, 'MARKETING_VERSION = 1.0;')
-        s(4, 'PRODUCT_BUNDLE_IDENTIFIER = "com.tidyup.app.TidyUpWidget";')
-        s(4, 'PRODUCT_NAME = TidyUpWidgetExtension;')
-        s(4, 'SKIP_INSTALL = YES;')
-        s(4, 'SWIFT_EMIT_LOC_STRINGS = YES;')
-        s(4, 'SWIFT_VERSION = 6.0;')
-        s(4, 'TARGETED_DEVICE_FAMILY = 1;')
-    elif target_type == "test":
+    elif is_test:
         s(4, 'BUNDLE_LOADER = "$(TEST_HOST)";')
         s(4, 'CODE_SIGN_STYLE = Automatic;')
         s(4, 'CURRENT_PROJECT_VERSION = 1;')
+        s(4, 'DEVELOPMENT_TEAM = 8WJQ6SJ678;')
         s(4, 'GENERATE_INFOPLIST_FILE = YES;')
         s(4, 'IPHONEOS_DEPLOYMENT_TARGET = 26.0;')
         s(4, 'MARKETING_VERSION = 1.0;')
@@ -623,14 +467,12 @@ def emit_config(cfg_id, name, target_type):
     s(2, "};")
 
 s(2, "/* Begin XCBuildConfiguration section */")
-emit_config(CONFIG_DEBUG_PROJ,     "Debug",   "proj")
-emit_config(CONFIG_RELEASE_PROJ,   "Release", "proj")
-emit_config(CONFIG_DEBUG_APP,      "Debug",   "app")
-emit_config(CONFIG_RELEASE_APP,    "Release", "app")
-emit_config(CONFIG_DEBUG_WIDGET,   "Debug",   "widget")
-emit_config(CONFIG_RELEASE_WIDGET, "Release", "widget")
-emit_config(CONFIG_DEBUG_TEST,     "Debug",   "test")
-emit_config(CONFIG_RELEASE_TEST,   "Release", "test")
+emit_config(CONFIG_DEBUG_PROJ,   "Debug",   False)
+emit_config(CONFIG_RELEASE_PROJ, "Release", False)
+emit_config(CONFIG_DEBUG_APP,    "Debug",   True)
+emit_config(CONFIG_RELEASE_APP,  "Release", True)
+emit_config(CONFIG_DEBUG_TEST,   "Debug",   False, is_test=True)
+emit_config(CONFIG_RELEASE_TEST, "Release", False, is_test=True)
 s(2, "/* End XCBuildConfiguration section */")
 s(0)
 
@@ -652,16 +494,6 @@ s(3, "isa = XCConfigurationList;")
 s(3, "buildConfigurations = (")
 s(4, f"{CONFIG_DEBUG_APP} /* Debug */,")
 s(4, f"{CONFIG_RELEASE_APP} /* Release */,")
-s(3, ");")
-s(3, 'defaultConfigurationIsVisible = 0;')
-s(3, 'defaultConfigurationName = Release;')
-s(2, "};")
-
-s(2, f"{CONFIG_LIST_WIDGET_ID} /* Build configuration list for PBXNativeTarget TidyUpWidgetExtension */ = {{")
-s(3, "isa = XCConfigurationList;")
-s(3, "buildConfigurations = (")
-s(4, f"{CONFIG_DEBUG_WIDGET} /* Debug */,")
-s(4, f"{CONFIG_RELEASE_WIDGET} /* Release */,")
 s(3, ");")
 s(3, 'defaultConfigurationIsVisible = 0;')
 s(3, 'defaultConfigurationName = Release;')
@@ -693,6 +525,5 @@ with open(out_path, "w") as f:
     f.write("\n".join(lines))
 
 print(f"✅ Generated {out_path}")
-print(f"   App sources:    {len(main_files)} files")
-print(f"   Widget sources: {len(widget_files)} files (+ {len(shared_widget_bf_ids)} shared)")
-print(f"   Test sources:   {len(test_files)} files")
+print(f"   App sources:  {len(main_files)} files")
+print(f"   Test sources: {len(test_files)} files")
