@@ -11,6 +11,7 @@ struct CategoryRowView: View {
     let isScanning: Bool
     var selectedCount: Int = 0
     var selectedBytes: Int64 = 0
+    var unit: String = "items"
     let action: () -> Void
 
     var body: some View {
@@ -19,13 +20,10 @@ struct CategoryRowView: View {
                 // Icon badge with selected checkmark distinction
                 ZStack(alignment: .topTrailing) {
                     Image(systemName: icon)
-                        .font(.title2)
-                        .foregroundStyle(selectedCount > 0 ? .white : color)
-                        .frame(width: 44, height: 44)
-                        .background(
-                            selectedCount > 0 ? color : color.opacity(0.12),
-                            in: .rect(cornerRadius: Theme.radiusCard)
-                        )
+                        .font(.title3)
+                        .foregroundStyle(.white)
+                        .frame(width: 48, height: 48)
+                        .background(color, in: .rect(cornerRadius: 12))
 
                     if selectedCount > 0 {
                         Image(systemName: "checkmark.circle.fill")
@@ -39,6 +37,7 @@ struct CategoryRowView: View {
                 VStack(alignment: .leading, spacing: Theme.spacing4) {
                     Text(title)
                         .font(.headline)
+                        .bold()
                         .foregroundStyle(.primary)
 
                     if isScanning {
@@ -46,25 +45,18 @@ struct CategoryRowView: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     } else if selectedCount > 0 {
-                        HStack(spacing: 4) {
-                            Text("\(selectedCount) of \(itemCount) selected")
-                                .bold()
-                            if selectedBytes > 0 {
-                                Text("·")
-                                Text(selectedBytes, format: .byteCount(style: .file))
-                                    .bold()
-                            }
-                        }
-                        .font(.caption)
-                        .foregroundStyle(color)
-                        .contentTransition(.numericText())
+                        Text("\(selectedCount) of \(itemCount) selected")
+                            .font(.caption)
+                            .bold()
+                            .foregroundStyle(color)
+                            .contentTransition(.numericText())
                     } else if itemCount > 0 {
-                        Text("\(itemCount) items · \(savingsBytes, format: .byteCount(style: .file))")
+                        Text("\(itemCount) \(unit)")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .contentTransition(.numericText())
                     } else {
-                        Text("No duplicates found")
+                        Text("None found")
                             .font(.caption)
                             .foregroundStyle(.tertiary)
                     }
@@ -72,29 +64,37 @@ struct CategoryRowView: View {
 
                 Spacer()
 
-                // Trailing selection pill
-                if selectedCount > 0 {
-                    HStack(spacing: 4) {
-                        Image(systemName: "checkmark")
-                            .font(.caption2.bold())
-                        Text("\(selectedCount)")
-                            .font(.caption.bold())
-                    }
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, Theme.spacing8)
-                    .padding(.vertical, Theme.spacing4)
-                    .background(color, in: .capsule)
-                }
-
-                if itemCount > 0 && !isScanning {
+                // Trailing savings or selection pill + chevron
+                HStack(spacing: Theme.spacing8) {
                     if selectedCount > 0 {
+                        HStack(spacing: 4) {
+                            Image(systemName: "checkmark")
+                                .font(.caption2.bold())
+                            Text("\(selectedCount)")
+                                .font(.caption.bold())
+                        }
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, Theme.spacing8)
+                        .padding(.vertical, Theme.spacing4)
+                        .background(color, in: .capsule)
+                    } else if !isScanning {
+                        if savingsBytes > 0 {
+                            Text(savingsBytes, format: .byteCount(style: .file))
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundStyle(.primary)
+                        } else {
+                            Text("—")
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+
+                    if itemCount > 0 && !isScanning {
                         Image(systemName: "chevron.right")
-                            .font(.caption)
-                            .foregroundStyle(color)
-                    } else {
-                        Image(systemName: "chevron.right")
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
+                            .font(.caption2.bold())
+                            .foregroundStyle(selectedCount > 0 ? color : Color.secondary.opacity(0.6))
                     }
                 }
             }
@@ -104,18 +104,18 @@ struct CategoryRowView: View {
                 if selectedCount > 0 {
                     color.opacity(0.08)
                         .clipShape(.rect(cornerRadius: Theme.radiusSheet))
+                } else {
+                    Color(.secondarySystemGroupedBackground)
+                        .clipShape(.rect(cornerRadius: Theme.radiusSheet))
                 }
             }
-            .glassEffect(.regular.interactive(), in: .rect(cornerRadius: Theme.radiusSheet))
             .overlay {
-                if selectedCount > 0 {
-                    RoundedRectangle(cornerRadius: Theme.radiusSheet)
-                        .stroke(color.opacity(0.75), lineWidth: 1.5)
-                }
+                RoundedRectangle(cornerRadius: Theme.radiusSheet)
+                    .stroke(selectedCount > 0 ? color.opacity(0.75) : Color.primary.opacity(0.04), lineWidth: selectedCount > 0 ? 1.5 : 1)
             }
         }
         .buttonStyle(.plain)
         .disabled(itemCount == 0 || isScanning)
-        .accessibilityLabel("\(title), \(itemCount) items, \(selectedCount) selected, tap to review")
+        .accessibilityLabel("\(title), \(itemCount) \(unit), \(selectedCount) selected, tap to review")
     }
 }

@@ -35,7 +35,7 @@ actor ContactScanService {
             let a = contacts[i]
             guard !visited.contains(a.identifier) else { continue }
             var duplicates: [CNContact] = []
-            var reason: MatchReason = .name
+            var reason: MatchReason = .phone
 
             for j in (i + 1)..<contacts.count {
                 let b = contacts[j]
@@ -48,10 +48,6 @@ actor ContactScanService {
                 } else if sharesEmail(a, b) {
                     duplicates.append(b)
                     reason = .email
-                    visited.insert(b.identifier)
-                } else if nameSimilarity(a, b) > 0.85 {
-                    duplicates.append(b)
-                    reason = .name
                     visited.insert(b.identifier)
                 }
             }

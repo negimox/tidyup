@@ -151,16 +151,15 @@ struct ReviewDeleteView: View {
     }
 
     private func assetFileSize(_ asset: PHAsset) -> Int64 {
-        let resources = PHAssetResource.assetResources(for: asset)
-        for resource in resources {
-            if let size = resource.value(forKey: "fileSize") as? Int64, size > 0 {
-                return size
-            }
-        }
         if asset.mediaType == .video {
             return max(1_000_000, Int64(asset.duration * 2_500_000))
         }
-        return Int64(asset.pixelWidth * asset.pixelHeight * 3)
+        // Approximate compressed HEIC/JPEG size without blocking main thread on assetsd IPC
+        let pixels = Int64(asset.pixelWidth * asset.pixelHeight)
+        if pixels > 0 {
+            return max(400_000, pixels / 3)
+        }
+        return 2_500_000
     }
 }
 
