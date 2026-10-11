@@ -24,25 +24,45 @@ struct AssetThumbnail: View {
         .frame(width: size, height: size)
         .clipped()
         .task(id: asset.localIdentifier) {
-            image = await loadThumbnail()
+            await loadThumbnail()
         }
     }
 
-    private func loadThumbnail() async -> UIImage? {
+    @MainActor
+    private func loadThumbnail() async {
         let px = Int(size * 2) // Retina
         let targetSize = CGSize(width: px, height: px)
         let options = PHImageRequestOptions()
         options.deliveryMode = .opportunistic
         options.resizeMode = .fast
         options.isNetworkAccessAllowed = false
-        return await withCheckedContinuation { cont in
-            PHImageManager.default().requestImage(
+
+        let stream = AsyncStream<UIImage?> { continuation in
+            let reqID = PHImageManager.default().requestImage(
                 for: asset,
                 targetSize: targetSize,
                 contentMode: .aspectFill,
                 options: options
-            ) { img, _ in
-                cont.resume(returning: img)
+            ) { img, info in
+                if let img {
+                    continuation.yield(img)
+                }
+                let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+                let isCancelled = (info?[PHImageCancelledKey] as? Bool) ?? false
+                let hasError = info?[PHImageErrorKey] != nil
+                if !isDegraded || isCancelled || hasError || img == nil {
+                    continuation.finish()
+                }
+            }
+            continuation.onTermination = { _ in
+                PHImageManager.default().cancelImageRequest(reqID)
+            }
+        }
+
+        for await img in stream {
+            guard !Task.isCancelled else { break }
+            if let img {
+                self.image = img
             }
         }
     }

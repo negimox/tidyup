@@ -101,8 +101,9 @@ actor ContactScanService {
     }
 
     nonisolated static func jaroSimilarity(_ s1: String, _ s2: String) -> Double {
+        if s1 == s2 { return 1.0 }
         let a = Array(s1), b = Array(s2)
-        if a.isEmpty && b.isEmpty { return 1 }
+        if a.isEmpty || b.isEmpty { return 0.0 }
         let matchDist = max(max(a.count, b.count) / 2 - 1, 0)
         var s1Matches = Array(repeating: false, count: a.count)
         var s2Matches = Array(repeating: false, count: b.count)
@@ -112,6 +113,7 @@ actor ContactScanService {
         for i in 0..<a.count {
             let start = max(0, i - matchDist)
             let end = min(i + matchDist + 1, b.count)
+            guard start < end else { continue }
             for j in start..<end where !s2Matches[j] && a[i] == b[j] {
                 s1Matches[i] = true
                 s2Matches[j] = true
@@ -122,7 +124,8 @@ actor ContactScanService {
         guard matches > 0 else { return 0 }
         var k = 0
         for i in 0..<a.count where s1Matches[i] {
-            while !s2Matches[k] { k += 1 }
+            while k < b.count && !s2Matches[k] { k += 1 }
+            guard k < b.count else { break }
             if a[i] != b[k] { transpositions += 1 }
             k += 1
         }

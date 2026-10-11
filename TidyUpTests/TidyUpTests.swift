@@ -22,6 +22,22 @@ struct ContactScanServiceTests {
         let diffScore = ContactScanService.jaroWinkler("john", "alex")
         #expect(diffScore < 0.5)
     }
+
+    @Test("Jaro-Winkler similarity handles asymmetric lengths without crashing")
+    func nameSimilarityAsymmetricLengths() async {
+        // These triggered Range requires lowerBound <= upperBound crash previously
+        let score1 = ContactScanService.jaroWinkler("Alexander", "Al")
+        #expect(score1 > 0.7)
+
+        let score2 = ContactScanService.jaroWinkler("Al", "Alexander")
+        #expect(score2 > 0.7)
+
+        let score3 = ContactScanService.jaroWinkler("a", "abcdefghijk")
+        #expect(score3 >= 0.0)
+
+        let scoreEmpty = ContactScanService.jaroWinkler("", "test")
+        #expect(scoreEmpty == 0.0)
+    }
 }
 
 // MARK: - Storage Service Tests

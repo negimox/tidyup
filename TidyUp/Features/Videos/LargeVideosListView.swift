@@ -132,19 +132,30 @@ private struct VideoPreviewSheet: View {
 
     private func loadPlayer() async {
         let options = PHVideoRequestOptions()
-        options.isNetworkAccessAllowed = false
+        options.isNetworkAccessAllowed = true
         options.deliveryMode = .fastFormat
+        let box = PlayerItemResumeBox()
         let result: AVPlayerItem? = await withCheckedContinuation { cont in
-            var resumed = false
             PHImageManager.default().requestPlayerItem(forVideo: asset, options: options) { item, _ in
-                guard !resumed else { return }
-                resumed = true
-                cont.resume(returning: item)
+                box.resume(continuation: cont, with: item)
             }
         }
         if let result {
             player = AVPlayer(playerItem: result)
             player?.play()
         }
+    }
+}
+
+private final class PlayerItemResumeBox: @unchecked Sendable {
+    private var isResumed = false
+    private let lock = NSLock()
+
+    func resume(continuation: CheckedContinuation<AVPlayerItem?, Never>, with item: AVPlayerItem?) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !isResumed else { return }
+        isResumed = true
+        continuation.resume(returning: item)
     }
 }

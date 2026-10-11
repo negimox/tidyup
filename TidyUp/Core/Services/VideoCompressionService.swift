@@ -35,16 +35,14 @@ actor VideoCompressionService {
         options.isNetworkAccessAllowed = true
         options.deliveryMode = .highQualityFormat
 
+        let box = AVAssetResumeBox()
         let avAsset: AVAsset = try await withCheckedThrowingContinuation { cont in
-            var resumed = false
             PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { asset, _, info in
-                guard !resumed else { return }
-                resumed = true
                 if let asset {
-                    cont.resume(returning: asset)
+                    box.resume(continuation: cont, returning: asset)
                 } else {
                     let error = info?[PHImageErrorKey] as? Error ?? CompressionError.assetNotConvertible
-                    cont.resume(throwing: error)
+                    box.resume(continuation: cont, throwing: error)
                 }
             }
         }
@@ -79,3 +77,24 @@ actor VideoCompressionService {
 }
 
 extension AVAsset: @unchecked @retroactive Sendable {}
+
+private final class AVAssetResumeBox: @unchecked Sendable {
+    private var isResumed = false
+    private let lock = NSLock()
+
+    func resume(continuation: CheckedContinuation<AVAsset, Error>, returning asset: AVAsset) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !isResumed else { return }
+        isResumed = true
+        continuation.resume(returning: asset)
+    }
+
+    func resume(continuation: CheckedContinuation<AVAsset, Error>, throwing error: Error) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !isResumed else { return }
+        isResumed = true
+        continuation.resume(throwing: error)
+    }
+}
