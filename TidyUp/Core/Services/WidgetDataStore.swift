@@ -78,14 +78,17 @@ public final class WidgetDataStore: Sendable {
     public static let appGroupSuiteName = "group.com.tidyup.app"
     private static let storageKey = "tidyup.widget_storage_data"
 
-    private let userDefaults: UserDefaults
+    private let suiteName: String?
+
+    private var userDefaults: UserDefaults {
+        if let suiteName, let defaults = UserDefaults(suiteName: suiteName) {
+            return defaults
+        }
+        return .standard
+    }
 
     public init(suiteName: String? = appGroupSuiteName) {
-        if let suite = suiteName, let defaults = UserDefaults(suiteName: suite) {
-            self.userDefaults = defaults
-        } else {
-            self.userDefaults = UserDefaults.standard
-        }
+        self.suiteName = suiteName
     }
 
     // MARK: - Persistence
