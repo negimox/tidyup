@@ -27,17 +27,28 @@ struct DuplicateContactsView: View {
                 }
                 .listStyle(.plain)
 
-                SelectionToolbar(
-                    selectedCount: selectedGroupIDs.count,
-                    selectedBytes: 0,
-                    actionTitle: "Review & Merge"
-                ) {
-                    showReview = true
+                VStack(spacing: 0) {
+                    Divider()
+                    Button {
+                        showReview = true
+                    } label: {
+                        HStack(spacing: Theme.spacing8) {
+                            Text("Review \(selectedGroupIDs.count) selected")
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Theme.spacing12)
+                    }
+                    .buttonStyle(.glassProminent)
+                    .disabled(selectedGroupIDs.isEmpty)
+                    .padding(.horizontal, Theme.spacing20)
+                    .padding(.vertical, Theme.spacing12)
                 }
+                .background(.regularMaterial)
             }
         }
         .navigationTitle("Duplicate Contacts")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $mergePreviewGroup) { group in
             ContactMergePreviewView(group: group)
         }
