@@ -385,34 +385,34 @@ private struct SimilarPhotoItem: View {
             }
             .buttonStyle(.plain)
             .padding(6)
-
-            // Dedicated "View" button at bottom-leading
-            VStack {
-                Spacer()
-                HStack {
-                    Button(action: onView) {
-                        HStack(spacing: 3) {
-                            Image(systemName: "eye.fill")
-                                .font(.caption2)
-                            Text("View")
-                                .font(.caption2)
-                                .bold()
-                        }
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 3)
-                        .background(Color.black.opacity(0.65))
-                        .clipShape(.capsule)
-                        .shadow(radius: 2)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("View photo in full screen")
-                    Spacer()
-                }
-            }
-            .padding(6)
         }
         .frame(width: 110, height: 110)
+        .overlay(alignment: .bottomLeading) {
+            Button(action: onView) {
+                HStack(spacing: 3) {
+                    Image(systemName: "eye.fill")
+                        .font(.caption2)
+                    Text("View")
+                        .font(.caption2)
+                        .bold()
+                }
+                .foregroundStyle(.white)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Color.black.opacity(0.75))
+                .clipShape(.capsule)
+                .shadow(radius: 2)
+            }
+            .buttonStyle(.plain)
+            .contentShape(Rectangle())
+            .highPriorityGesture(
+                TapGesture().onEnded {
+                    onView()
+                }
+            )
+            .padding(6)
+            .accessibilityLabel("View photo in full screen")
+        }
     }
 }
 
