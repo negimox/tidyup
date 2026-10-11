@@ -9,7 +9,7 @@ struct SimilarPhotosListView: View {
     let groups: [SimilarGroup]
     var onReturnToHome: (() -> Void)? = nil
 
-    @State private var selectedPhotoIDs: Set<String>
+    @Environment(SelectionStore.self) private var selectionStore
     @State private var showReview = false
     @State private var selectedGroupForDetail: SimilarGroup? = nil
     @State private var previewItem: PhotoPreviewItem? = nil
@@ -17,8 +17,17 @@ struct SimilarPhotosListView: View {
     init(groups: [SimilarGroup], onReturnToHome: (() -> Void)? = nil) {
         self.groups = groups
         self.onReturnToHome = onReturnToHome
-        // By default all photos are unselected
-        _selectedPhotoIDs = State(initialValue: [])
+    }
+
+    private var selectedPhotoIDs: Set<String> {
+        selectionStore.selectedSimilarPhotoIDs
+    }
+
+    private var selectedPhotoIDsBinding: Binding<Set<String>> {
+        Binding(
+            get: { selectionStore.selectedSimilarPhotoIDs },
+            set: { selectionStore.selectedSimilarPhotoIDs = $0 }
+        )
     }
 
     private var allAssets: [PHAsset] {
@@ -59,7 +68,7 @@ struct SimilarPhotosListView: View {
                         ForEach(groups) { group in
                             SimilarGroupCard(
                                 group: group,
-                                selectedPhotoIDs: $selectedPhotoIDs,
+                                selectedPhotoIDs: selectedPhotoIDsBinding,
                                 onInspect: {
                                     selectedGroupForDetail = group
                                 },
@@ -107,12 +116,12 @@ struct SimilarPhotosListView: View {
                 asset: item.asset,
                 isBest: item.isBest,
                 isSelected: Binding(
-                    get: { selectedPhotoIDs.contains(item.asset.localIdentifier) },
+                    get: { selectionStore.selectedSimilarPhotoIDs.contains(item.asset.localIdentifier) },
                     set: { selected in
                         if selected {
-                            selectedPhotoIDs.insert(item.asset.localIdentifier)
+                            selectionStore.selectedSimilarPhotoIDs.insert(item.asset.localIdentifier)
                         } else {
-                            selectedPhotoIDs.remove(item.asset.localIdentifier)
+                            selectionStore.selectedSimilarPhotoIDs.remove(item.asset.localIdentifier)
                         }
                     }
                 )
@@ -123,7 +132,10 @@ struct SimilarPhotosListView: View {
                 selectedPhotoIDs: selectedPhotoIDs,
                 allAssets: allAssets,
                 contactGroups: [],
-                onReturnToHome: onReturnToHome
+                onReturnToHome: {
+                    selectionStore.clearSimilarPhotos()
+                    onReturnToHome?()
+                }
             )
         }
         .navigationDestination(item: $selectedGroupForDetail) { group in

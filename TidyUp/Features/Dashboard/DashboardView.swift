@@ -1,15 +1,18 @@
 import SwiftUI
 import SwiftData
+import Photos
 
 struct DashboardView: View {
     @State private var viewModel = DashboardViewModel()
     @Environment(\.modelContext) private var modelContext
+    @Environment(SelectionStore.self) private var selectionStore
 
     // Navigation destinations
     @State private var showSimilarPhotos = false
     @State private var showScreenshots = false
     @State private var showVideos = false
     @State private var showContacts = false
+    @State private var showReviewAll = false
 
     var body: some View {
         NavigationStack {
@@ -23,13 +26,17 @@ struct DashboardView: View {
 
                     DashboardScanControls(
                         scanState: viewModel.scanState,
-                        onScan: { viewModel.startScan(modelContainer: modelContext.container) },
+                        onScan: {
+                            selectionStore.clearAll()
+                            viewModel.startScan(modelContainer: modelContext.container)
+                        },
                         onCancel: { viewModel.cancelScan() }
                     )
 
                     DashboardCategoriesSection(
                         scanResult: viewModel.scanResult,
                         isScanning: isScanning,
+                        selectionStore: selectionStore,
                         onSelectSimilar: { showSimilarPhotos = true },
                         onSelectScreenshots: { showScreenshots = true },
                         onSelectVideos: { showVideos = true },
@@ -40,6 +47,35 @@ struct DashboardView: View {
                 .padding(.top, Theme.spacing24)
                 .padding(.bottom, Theme.spacing48)
             }
+            .safeAreaInset(edge: .bottom) {
+                if selectionStore.hasSelections {
+                    VStack(spacing: 0) {
+                        Divider()
+                        Button {
+                            showReviewAll = true
+                        } label: {
+                            HStack(spacing: Theme.spacing8) {
+                                Text("Review \(selectionStore.totalSelectedCount) selected")
+                                    .bold()
+                                let totalBytes = selectionStore.totalSelectedBytes(from: viewModel.scanResult)
+                                if totalBytes > 0 {
+                                    Text("·")
+                                    Text(totalBytes, format: .byteCount(style: .file))
+                                        .bold()
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, Theme.spacing12)
+                        }
+                        .buttonStyle(.glassProminent)
+                        .padding(.horizontal, Theme.spacing20)
+                        .padding(.vertical, Theme.spacing12)
+                    }
+                    .background(.regularMaterial)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selectionStore.totalSelectedCount)
             .navigationTitle("TidyUp")
             .navigationBarTitleDisplayMode(.large)
             .task { await viewModel.loadStorageInfo() }
@@ -75,6 +111,17 @@ struct DashboardView: View {
                     )
                 }
             }
+            .navigationDestination(isPresented: $showReviewAll) {
+                ReviewDeleteView(
+                    selectedPhotoIDs: selectionStore.allSelectedPhotoIDs,
+                    allAssets: allScannedAssets,
+                    contactGroups: selectedContactGroups,
+                    onReturnToHome: {
+                        selectionStore.clearAll()
+                        returnToHomeAndRescan()
+                    }
+                )
+            }
         }
     }
 
@@ -83,7 +130,22 @@ struct DashboardView: View {
         showScreenshots = false
         showVideos = false
         showContacts = false
+        showReviewAll = false
+        selectionStore.clearAll()
         viewModel.startScan(modelContainer: modelContext.container)
+    }
+
+    private var allScannedAssets: [PHAsset] {
+        guard let result = viewModel.scanResult else { return [] }
+        let similarAssets = result.similarGroups.flatMap { [$0.bestAsset] + $0.otherAssets }
+        let screenshotAssets = result.screenshots.map { $0.asset }
+        let videoAssets = result.videos.map { $0.asset }
+        return similarAssets + screenshotAssets + videoAssets
+    }
+
+    private var selectedContactGroups: [DuplicateContactGroup] {
+        guard let result = viewModel.scanResult else { return [] }
+        return result.duplicateContacts.filter { selectionStore.selectedContactGroupIDs.contains($0.id) }
     }
 
     private var isScanning: Bool {
@@ -150,6 +212,7 @@ private struct DashboardScanControls: View {
 private struct DashboardCategoriesSection: View {
     let scanResult: ScanResult?
     let isScanning: Bool
+    let selectionStore: SelectionStore
     let onSelectSimilar: () -> Void
     let onSelectScreenshots: () -> Void
     let onSelectVideos: () -> Void
@@ -165,6 +228,8 @@ private struct DashboardCategoriesSection: View {
                     itemCount: scanResult?.similarGroups.count ?? 0,
                     savingsBytes: scanResult?.similarGroups.reduce(0) { $0 + $1.estimatedSavings } ?? 0,
                     isScanning: isScanning,
+                    selectedCount: selectionStore.similarPhotosCount,
+                    selectedBytes: selectionStore.similarPhotosBytes(from: scanResult),
                     action: onSelectSimilar
                 )
 
@@ -175,6 +240,8 @@ private struct DashboardCategoriesSection: View {
                     itemCount: scanResult?.screenshots.count ?? 0,
                     savingsBytes: scanResult?.screenshots.reduce(0) { $0 + $1.fileSize } ?? 0,
                     isScanning: isScanning,
+                    selectedCount: selectionStore.screenshotsCount,
+                    selectedBytes: selectionStore.screenshotsBytes(from: scanResult),
                     action: onSelectScreenshots
                 )
 
@@ -185,6 +252,8 @@ private struct DashboardCategoriesSection: View {
                     itemCount: scanResult?.videos.count ?? 0,
                     savingsBytes: scanResult?.videos.reduce(0) { $0 + $1.fileSize } ?? 0,
                     isScanning: isScanning,
+                    selectedCount: selectionStore.videosCount,
+                    selectedBytes: selectionStore.videosBytes(from: scanResult),
                     action: onSelectVideos
                 )
 
@@ -195,6 +264,8 @@ private struct DashboardCategoriesSection: View {
                     itemCount: scanResult?.duplicateContacts.count ?? 0,
                     savingsBytes: 0,
                     isScanning: isScanning,
+                    selectedCount: selectionStore.contactsCount,
+                    selectedBytes: 0,
                     action: onSelectContacts
                 )
             }

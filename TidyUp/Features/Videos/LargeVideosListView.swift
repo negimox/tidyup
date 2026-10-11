@@ -16,11 +16,15 @@ struct LargeVideosListView: View {
     let items: [VideoItem]
     var onReturnToHome: (() -> Void)? = nil
 
-    @State private var selected: Set<String> = []
+    @Environment(SelectionStore.self) private var selectionStore
     @State private var previewItem: VideoItem?
     @State private var compressingItem: VideoItem?
     @State private var showReview = false
     @State private var selectedSort: VideoSortOption = .largest
+
+    private var selected: Set<String> {
+        selectionStore.selectedVideoIDs
+    }
 
     private var selectedBytes: Int64 {
         items.filter { selected.contains($0.id) }.reduce(0) { $0 + $1.fileSize }
@@ -151,13 +155,16 @@ struct LargeVideosListView: View {
                 selectedPhotoIDs: selected,
                 allAssets: items.map { $0.asset },
                 contactGroups: [],
-                onReturnToHome: onReturnToHome
+                onReturnToHome: {
+                    selectionStore.clearVideos()
+                    onReturnToHome?()
+                }
             )
         }
     }
 
     private func toggleSelection(_ id: String) {
-        if selected.contains(id) { selected.remove(id) } else { selected.insert(id) }
+        selectionStore.toggleVideo(id)
     }
 }
 

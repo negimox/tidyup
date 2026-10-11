@@ -5,18 +5,21 @@ import Photos
 struct GroupDetailView: View {
     let group: SimilarGroup
     var onReturnToHome: (() -> Void)? = nil
-    @State private var selected: Set<String>
+    @Environment(SelectionStore.self) private var selectionStore
     @State private var showReview = false
     @State private var previewItem: PhotoPreviewItem? = nil
 
     init(group: SimilarGroup, onReturnToHome: (() -> Void)? = nil) {
         self.group = group
         self.onReturnToHome = onReturnToHome
-        _selected = State(initialValue: Set(group.otherAssets.map { $0.localIdentifier }))
     }
 
     private var allAssets: [PHAsset] {
         [group.bestAsset] + group.otherAssets
+    }
+
+    private var selected: Set<String> {
+        selectionStore.selectedSimilarPhotoIDs
     }
 
     private var selectedBytes: Int64 {
@@ -65,12 +68,12 @@ struct GroupDetailView: View {
                 asset: item.asset,
                 isBest: item.isBest,
                 isSelected: Binding(
-                    get: { selected.contains(item.asset.localIdentifier) },
+                    get: { selectionStore.selectedSimilarPhotoIDs.contains(item.asset.localIdentifier) },
                     set: { isSel in
                         if isSel {
-                            selected.insert(item.asset.localIdentifier)
+                            selectionStore.selectedSimilarPhotoIDs.insert(item.asset.localIdentifier)
                         } else {
-                            selected.remove(item.asset.localIdentifier)
+                            selectionStore.selectedSimilarPhotoIDs.remove(item.asset.localIdentifier)
                         }
                     }
                 )
@@ -81,18 +84,16 @@ struct GroupDetailView: View {
                 selectedPhotoIDs: selected,
                 allAssets: allAssets,
                 contactGroups: [],
-                onReturnToHome: onReturnToHome
+                onReturnToHome: {
+                    selectionStore.clearSimilarPhotos()
+                    onReturnToHome?()
+                }
             )
         }
     }
 
     private func toggle(asset: PHAsset) {
-        let id = asset.localIdentifier
-        if selected.contains(id) {
-            selected.remove(id)
-        } else {
-            selected.insert(id)
-        }
+        selectionStore.toggleSimilarPhoto(asset.localIdentifier)
     }
 }
 

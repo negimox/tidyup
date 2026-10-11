@@ -42,6 +42,8 @@
 		F09FA856264E9D580BC077B3 /* TidyUp/Features/Review/ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADEC5C3ABE248664073E93 /* TidyUp/Features/Review/ReviewViewModel.swift */; };
 		F57626AD3B53BF32D7C6FD84 /* TidyUp/Core/Cache/CachedFeaturePrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8F3A3E100F231CB5E153DD /* TidyUp/Core/Cache/CachedFeaturePrint.swift */; };
 		F5A3B46A5D62B0CB6174FA41 /* TidyUp/DesignSystem/CategoryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0736EB5228111D4ACA4468 /* TidyUp/DesignSystem/CategoryRowView.swift */; };
+		E8A1D45028F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1D45128F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		18202DD188D4D69CE373CA29 /* TidyUp/Features/SimilarPhotos/AssetThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Features/SimilarPhotos/AssetThumbnail.swift; sourceTree = SOURCE_ROOT; };
 		1B0CE7FA6C1EF094123B44D3 /* TidyUp/Core/Models/ScreenshotItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Core/Models/ScreenshotItem.swift; sourceTree = SOURCE_ROOT; };
 		1B9D5408F135997E0007B832 /* TidyUp/Core/Models/VideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Core/Models/VideoItem.swift; sourceTree = SOURCE_ROOT; };
+		E8A1D45128F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Core/Models/SelectionStore.swift; sourceTree = SOURCE_ROOT; };
+
 		3818F122F9999568278C9447 /* TidyUp/Resources/Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TidyUp/Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		3E790D325A222011580D72C0 /* TidyUp/Features/SpaceFreed/SpaceFreedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Features/SpaceFreed/SpaceFreedView.swift; sourceTree = SOURCE_ROOT; };
 		44F325F5D619518AF6972725 /* TidyUp/Features/Dashboard/DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Features/Dashboard/DashboardViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -175,6 +179,8 @@
 				A8F2958007371F836D68B88D /* TidyUp/Features/Vault/VaultView.swift */,
 				6C5D0A625640D4A3722AC57F /* TidyUp/Core/Services/VideoCompressionService.swift */,
 				1B9D5408F135997E0007B832 /* TidyUp/Core/Models/VideoItem.swift */,
+				E8A1D45128F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift */,
+
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -328,6 +334,8 @@
 				8A90C3D4903D79FE9562727A /* TidyUp/Features/Vault/VaultView.swift in Sources */,
 				E0DF3230558FE01791240762 /* TidyUp/Core/Services/VideoCompressionService.swift in Sources */,
 				9327DE7028F787D21C50343B /* TidyUp/Core/Models/VideoItem.swift in Sources */,
+				E8A1D45028F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

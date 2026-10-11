@@ -4,9 +4,13 @@ import Photos
 struct ScreenshotsGridView: View {
     let items: [ScreenshotItem]
     var onReturnToHome: (() -> Void)? = nil
-    @State private var selected: Set<String> = []
+    @Environment(SelectionStore.self) private var selectionStore
     @State private var showReview = false
     @State private var previewItem: PhotoPreviewItem? = nil
+
+    private var selected: Set<String> {
+        selectionStore.selectedScreenshotIDs
+    }
 
     private var selectedBytes: Int64 {
         items.filter { selected.contains($0.id) }.reduce(0) { $0 + $1.fileSize }
@@ -28,9 +32,9 @@ struct ScreenshotsGridView: View {
                             allSelected: allSelected,
                             onToggleAll: {
                                 if allSelected {
-                                    selected.removeAll()
+                                    selectionStore.clearScreenshots()
                                 } else {
-                                    selected = Set(items.map { $0.id })
+                                    selectionStore.selectedScreenshotIDs = Set(items.map { $0.id })
                                 }
                             }
                         )
@@ -91,12 +95,12 @@ struct ScreenshotsGridView: View {
                 asset: item.asset,
                 isBest: false,
                 isSelected: Binding(
-                    get: { selected.contains(item.asset.localIdentifier) },
+                    get: { selectionStore.selectedScreenshotIDs.contains(item.asset.localIdentifier) },
                     set: { isSel in
                         if isSel {
-                            selected.insert(item.asset.localIdentifier)
+                            selectionStore.selectedScreenshotIDs.insert(item.asset.localIdentifier)
                         } else {
-                            selected.remove(item.asset.localIdentifier)
+                            selectionStore.selectedScreenshotIDs.remove(item.asset.localIdentifier)
                         }
                     }
                 )
@@ -107,7 +111,10 @@ struct ScreenshotsGridView: View {
                 selectedPhotoIDs: selected,
                 allAssets: items.map { $0.asset },
                 contactGroups: [],
-                onReturnToHome: onReturnToHome
+                onReturnToHome: {
+                    selectionStore.clearScreenshots()
+                    onReturnToHome?()
+                }
             )
         }
     }
@@ -115,7 +122,7 @@ struct ScreenshotsGridView: View {
     private var allSelected: Bool { selected.count == items.count }
 
     private func toggleSelection(_ id: String) {
-        if selected.contains(id) { selected.remove(id) } else { selected.insert(id) }
+        selectionStore.toggleScreenshot(id)
     }
 }
 

@@ -4,9 +4,13 @@ import Contacts
 struct DuplicateContactsView: View {
     let groups: [DuplicateContactGroup]
     var onReturnToHome: (() -> Void)? = nil
-    @State private var selectedGroupIDs: Set<UUID> = []
+    @Environment(SelectionStore.self) private var selectionStore
     @State private var showReview = false
     @State private var mergePreviewGroup: DuplicateContactGroup?
+
+    private var selectedGroupIDs: Set<UUID> {
+        selectionStore.selectedContactGroupIDs
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -57,13 +61,16 @@ struct DuplicateContactsView: View {
                 selectedPhotoIDs: [],
                 allAssets: [],
                 contactGroups: groups.filter { selectedGroupIDs.contains($0.id) },
-                onReturnToHome: onReturnToHome
+                onReturnToHome: {
+                    selectionStore.clearContacts()
+                    onReturnToHome?()
+                }
             )
         }
     }
 
     private func toggle(_ id: UUID) {
-        if selectedGroupIDs.contains(id) { selectedGroupIDs.remove(id) } else { selectedGroupIDs.insert(id) }
+        selectionStore.toggleContactGroup(id)
     }
 }
 
