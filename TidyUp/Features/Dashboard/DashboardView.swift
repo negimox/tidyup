@@ -45,25 +45,45 @@ struct DashboardView: View {
             .task { await viewModel.loadStorageInfo() }
             .navigationDestination(isPresented: $showSimilarPhotos) {
                 if let result = viewModel.scanResult {
-                    SimilarPhotosListView(groups: result.similarGroups)
+                    SimilarPhotosListView(
+                        groups: result.similarGroups,
+                        onReturnToHome: returnToHomeAndRescan
+                    )
                 }
             }
             .navigationDestination(isPresented: $showScreenshots) {
                 if let result = viewModel.scanResult {
-                    ScreenshotsGridView(items: result.screenshots)
+                    ScreenshotsGridView(
+                        items: result.screenshots,
+                        onReturnToHome: returnToHomeAndRescan
+                    )
                 }
             }
             .navigationDestination(isPresented: $showVideos) {
                 if let result = viewModel.scanResult {
-                    LargeVideosListView(items: result.videos)
+                    LargeVideosListView(
+                        items: result.videos,
+                        onReturnToHome: returnToHomeAndRescan
+                    )
                 }
             }
             .navigationDestination(isPresented: $showContacts) {
                 if let result = viewModel.scanResult {
-                    DuplicateContactsView(groups: result.duplicateContacts)
+                    DuplicateContactsView(
+                        groups: result.duplicateContacts,
+                        onReturnToHome: returnToHomeAndRescan
+                    )
                 }
             }
         }
+    }
+
+    private func returnToHomeAndRescan() {
+        showSimilarPhotos = false
+        showScreenshots = false
+        showVideos = false
+        showContacts = false
+        viewModel.startScan(modelContainer: modelContext.container)
     }
 
     private var isScanning: Bool {

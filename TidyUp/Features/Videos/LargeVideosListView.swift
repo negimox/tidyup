@@ -4,6 +4,7 @@ import Photos
 
 struct LargeVideosListView: View {
     let items: [VideoItem]
+    var onReturnToHome: (() -> Void)? = nil
     @State private var selected: Set<String> = []
     @State private var previewItem: VideoItem?
     @State private var showReview = false
@@ -51,7 +52,8 @@ struct LargeVideosListView: View {
             ReviewDeleteView(
                 selectedPhotoIDs: selected,
                 allAssets: items.map { $0.asset },
-                contactGroups: []
+                contactGroups: [],
+                onReturnToHome: onReturnToHome
             )
         }
     }

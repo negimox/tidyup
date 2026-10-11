@@ -3,6 +3,7 @@ import Contacts
 
 struct DuplicateContactsView: View {
     let groups: [DuplicateContactGroup]
+    var onReturnToHome: (() -> Void)? = nil
     @State private var selectedGroupIDs: Set<UUID> = []
     @State private var showReview = false
     @State private var mergePreviewGroup: DuplicateContactGroup?
@@ -44,7 +45,8 @@ struct DuplicateContactsView: View {
             ReviewDeleteView(
                 selectedPhotoIDs: [],
                 allAssets: [],
-                contactGroups: groups.filter { selectedGroupIDs.contains($0.id) }
+                contactGroups: groups.filter { selectedGroupIDs.contains($0.id) },
+                onReturnToHome: onReturnToHome
             )
         }
     }

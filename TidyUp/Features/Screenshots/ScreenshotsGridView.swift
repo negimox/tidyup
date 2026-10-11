@@ -3,6 +3,7 @@ import Photos
 
 struct ScreenshotsGridView: View {
     let items: [ScreenshotItem]
+    var onReturnToHome: (() -> Void)? = nil
     @State private var selected: Set<String> = []
     @State private var showReview = false
 
@@ -67,7 +68,8 @@ struct ScreenshotsGridView: View {
             ReviewDeleteView(
                 selectedPhotoIDs: selected,
                 allAssets: items.map { $0.asset },
-                contactGroups: []
+                contactGroups: [],
+                onReturnToHome: onReturnToHome
             )
         }
     }
