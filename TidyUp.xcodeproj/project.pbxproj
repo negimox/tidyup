@@ -43,6 +43,7 @@
 		F57626AD3B53BF32D7C6FD84 /* TidyUp/Core/Cache/CachedFeaturePrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8F3A3E100F231CB5E153DD /* TidyUp/Core/Cache/CachedFeaturePrint.swift */; };
 		F5A3B46A5D62B0CB6174FA41 /* TidyUp/DesignSystem/CategoryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0736EB5228111D4ACA4468 /* TidyUp/DesignSystem/CategoryRowView.swift */; };
 		E8A1D45028F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1D45128F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift */; };
+		E8A1D45228F787D21C50343B /* TidyUp/Features/Videos/CompressVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1D45328F787D21C50343B /* TidyUp/Features/Videos/CompressVideosView.swift */; };
 
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		EF756ECBCD94352F299118B0 /* TidyUp/Features/Contacts/ContactMergePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Features/Contacts/ContactMergePreviewView.swift; sourceTree = SOURCE_ROOT; };
 		F51E6063441964301CA29A07 /* TidyUp/Features/SimilarPhotos/GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Features/SimilarPhotos/GroupDetailView.swift; sourceTree = SOURCE_ROOT; };
 		FA0736EB5228111D4ACA4468 /* TidyUp/DesignSystem/CategoryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/DesignSystem/CategoryRowView.swift; sourceTree = SOURCE_ROOT; };
+		E8A1D45328F787D21C50343B /* TidyUp/Features/Videos/CompressVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidyUp/Features/Videos/CompressVideosView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				6C5D0A625640D4A3722AC57F /* TidyUp/Core/Services/VideoCompressionService.swift */,
 				1B9D5408F135997E0007B832 /* TidyUp/Core/Models/VideoItem.swift */,
 				E8A1D45128F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift */,
+				E8A1D45328F787D21C50343B /* TidyUp/Features/Videos/CompressVideosView.swift */,
 
 			);
 			name = "Recovered References";
@@ -335,6 +338,7 @@
 				E0DF3230558FE01791240762 /* TidyUp/Core/Services/VideoCompressionService.swift in Sources */,
 				9327DE7028F787D21C50343B /* TidyUp/Core/Models/VideoItem.swift in Sources */,
 				E8A1D45028F787D21C50343B /* TidyUp/Core/Models/SelectionStore.swift in Sources */,
+				E8A1D45228F787D21C50343B /* TidyUp/Features/Videos/CompressVideosView.swift in Sources */,
 
 			);
 			runOnlyForDeploymentPostprocessing = 0;

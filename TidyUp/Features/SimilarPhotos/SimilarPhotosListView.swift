@@ -1,6 +1,16 @@
 import SwiftUI
 import Photos
 
+enum SimilarSortOption: String, CaseIterable, Identifiable {
+    case newest = "Newest"
+    case oldest = "Oldest"
+    case largest = "Largest"
+    case smallest = "Smallest"
+
+    var id: String { rawValue }
+    var title: String { rawValue }
+}
+
 /// Shows similar-photo groups according to Figma Page 4 design.
 /// Each group is a card containing a horizontal scroll of photos with "Best" badge,
 /// per-photo deletion selection toggle, dedicated "View" preview button,
@@ -13,6 +23,7 @@ struct SimilarPhotosListView: View {
     @State private var showReview = false
     @State private var selectedGroupForDetail: SimilarGroup? = nil
     @State private var previewItem: PhotoPreviewItem? = nil
+    @State private var selectedSort: SimilarSortOption = .newest
 
     init(groups: [SimilarGroup], onReturnToHome: (() -> Void)? = nil) {
         self.groups = groups
@@ -44,6 +55,19 @@ struct SimilarPhotosListView: View {
         groups.reduce(0) { $0 + $1.estimatedSavings }
     }
 
+    private var sortedGroups: [SimilarGroup] {
+        switch selectedSort {
+        case .newest:
+            return groups.sorted { ($0.bestAsset.creationDate ?? .distantPast) > ($1.bestAsset.creationDate ?? .distantPast) }
+        case .oldest:
+            return groups.sorted { ($0.bestAsset.creationDate ?? .distantPast) < ($1.bestAsset.creationDate ?? .distantPast) }
+        case .largest:
+            return groups.sorted { $0.estimatedSavings > $1.estimatedSavings }
+        case .smallest:
+            return groups.sorted { $0.estimatedSavings < $1.estimatedSavings }
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             if groups.isEmpty {
@@ -56,16 +80,47 @@ struct SimilarPhotosListView: View {
                 // Scrollable content with header description inside so it stretches on overscroll
                 ScrollView {
                     VStack(alignment: .leading, spacing: Theme.spacing16) {
-                        // Header description with the title
+                        // Header description with the title and sort menu
                         HStack {
                             Text("\(groups.count) groups · \(totalSavings, format: .byteCount(style: .file)) can be freed")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
+
                             Spacer()
+
+                            Menu {
+                                ForEach(SimilarSortOption.allCases) { option in
+                                    Button {
+                                        selectedSort = option
+                                    } label: {
+                                        HStack {
+                                            Text(option.title)
+                                            if selectedSort == option {
+                                                Image(systemName: "checkmark")
+                                            }
+                                        }
+                                    }
+                                }
+                            } label: {
+                                HStack(spacing: Theme.spacing4) {
+                                    Text(selectedSort.title)
+                                        .font(.subheadline)
+                                        .bold()
+                                        .foregroundStyle(Theme.primary)
+                                    Image(systemName: "chevron.down")
+                                        .font(.caption2)
+                                        .bold()
+                                        .foregroundStyle(Theme.primary)
+                                }
+                                .padding(.horizontal, Theme.spacing12)
+                                .padding(.vertical, Theme.spacing8)
+                                .background(Theme.primary.opacity(0.1))
+                                .clipShape(.capsule)
+                            }
                         }
                         .padding(.horizontal, Theme.spacing4)
 
-                        ForEach(groups) { group in
+                        ForEach(sortedGroups) { group in
                             SimilarGroupCard(
                                 group: group,
                                 selectedPhotoIDs: selectedPhotoIDsBinding,

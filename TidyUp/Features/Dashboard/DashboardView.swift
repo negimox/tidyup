@@ -3,7 +3,7 @@ import SwiftData
 import Photos
 
 struct DashboardView: View {
-    @State private var viewModel = DashboardViewModel()
+    @Environment(DashboardViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
     @Environment(SelectionStore.self) private var selectionStore
 

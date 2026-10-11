@@ -15,6 +15,7 @@ struct TidyUpApp: App {
         CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }()
 
+    @State private var dashboardViewModel = DashboardViewModel()
     @State private var selectionStore = SelectionStore()
     @Environment(\.scenePhase) private var scenePhase
 
@@ -29,6 +30,7 @@ struct TidyUpApp: App {
                 )
             }
         }
+        .environment(dashboardViewModel)
         .environment(selectionStore)
         .modelContainer(for: CachedFeaturePrint.self)
         .onChange(of: scenePhase) { _, newPhase in

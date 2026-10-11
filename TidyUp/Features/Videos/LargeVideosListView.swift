@@ -18,7 +18,6 @@ struct LargeVideosListView: View {
 
     @Environment(SelectionStore.self) private var selectionStore
     @State private var previewItem: VideoItem?
-    @State private var compressingItem: VideoItem?
     @State private var showReview = false
     @State private var selectedSort: VideoSortOption = .largest
 
@@ -104,8 +103,7 @@ struct LargeVideosListView: View {
                                     item: item,
                                     isSelected: selected.contains(item.id),
                                     onToggle: { toggleSelection(item.id) },
-                                    onPreview: { previewItem = item },
-                                    onCompress: { compressingItem = item }
+                                    onPreview: { previewItem = item }
                                 )
                             }
                         }
@@ -147,9 +145,6 @@ struct LargeVideosListView: View {
         .sheet(item: $previewItem) { item in
             VideoPreviewSheet(asset: item.asset)
         }
-        .sheet(item: $compressingItem) { item in
-            VideoCompressSheet(item: item)
-        }
         .navigationDestination(isPresented: $showReview) {
             ReviewDeleteView(
                 selectedPhotoIDs: selected,
@@ -175,7 +170,6 @@ private struct VideoRow: View {
     let isSelected: Bool
     let onToggle: () -> Void
     let onPreview: () -> Void
-    let onCompress: () -> Void
 
     private var formattedDate: String {
         guard let date = item.asset.creationDate else { return "Unknown" }
@@ -188,14 +182,6 @@ private struct VideoRow: View {
 
     var body: some View {
         HStack(spacing: Theme.spacing12) {
-            // Checkmark
-            Button(action: onToggle) {
-                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(.title3)
-                    .foregroundStyle(isSelected ? Theme.deleteRed : Color.secondary.opacity(0.5))
-            }
-            .buttonStyle(.plain)
-
             // Video thumbnail with duration and play button
             Button(action: onPreview) {
                 ZStack {
@@ -243,19 +229,14 @@ private struct VideoRow: View {
 
             Spacer()
 
-            // Compress button
-            Button(action: onCompress) {
-                Text("Compress")
-                    .font(.caption)
-                    .bold()
-                    .padding(.horizontal, Theme.spacing12)
-                    .padding(.vertical, Theme.spacing8)
-                    .background(Theme.primary.opacity(0.12))
-                    .foregroundStyle(Theme.primary)
-                    .clipShape(.capsule)
+            // Selection toggle on right side instead of "compress"
+            Button(action: onToggle) {
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.title3)
+                    .foregroundStyle(isSelected ? Theme.deleteRed : Color.secondary.opacity(0.5))
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Compress video")
+            .accessibilityLabel(isSelected ? "Deselect video" : "Select video")
         }
         .padding(.horizontal, Theme.spacing16)
         .padding(.vertical, Theme.spacing12)
@@ -268,153 +249,9 @@ private struct VideoRow: View {
     }
 }
 
-// MARK: - Compression Sheet
-
-private struct VideoCompressSheet: View {
-    let item: VideoItem
-    @Environment(\.dismiss) private var dismiss
-
-    @State private var isCompressing = false
-    @State private var compressionResult: (compressedSize: Int64, newAssetIdentifier: String)? = nil
-    @State private var errorMessage: String? = nil
-
-    private var estimatedSaved: Int64 {
-        max(0, item.fileSize * 6 / 10)
-    }
-
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: Theme.spacing24) {
-                Spacer()
-
-                ZStack {
-                    Circle()
-                        .fill(Theme.primary.opacity(0.12))
-                        .frame(width: 90, height: 90)
-                    Image(systemName: "arrow.down.right.and.arrow.up.left")
-                        .font(.largeTitle)
-                        .foregroundStyle(Theme.primary)
-                }
-
-                VStack(spacing: Theme.spacing8) {
-                    Text("Compress Video")
-                        .font(.title2)
-                        .bold()
-                    Text("Re-encode to 720p HD to reclaim storage while keeping good visual quality.")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, Theme.spacing20)
-                }
-
-                VStack(spacing: Theme.spacing12) {
-                    HStack {
-                        Text("Current Size")
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text(item.fileSize, format: .byteCount(style: .file))
-                            .bold()
-                    }
-                    Divider()
-                    HStack {
-                        Text("Estimated New Size")
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text(max(1024, item.fileSize - estimatedSaved), format: .byteCount(style: .file))
-                            .bold()
-                            .foregroundStyle(Theme.bestGreen)
-                    }
-                    Divider()
-                    HStack {
-                        Text("Estimated Space Saved")
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text("~\(estimatedSaved, format: .byteCount(style: .file))")
-                            .bold()
-                            .foregroundStyle(Theme.bestGreen)
-                    }
-                }
-                .padding(Theme.spacing16)
-                .background(Color(.secondarySystemGroupedBackground))
-                .clipShape(.rect(cornerRadius: Theme.radiusCard))
-                .padding(.horizontal, Theme.spacing20)
-
-                if let errorMessage {
-                    Text(errorMessage)
-                        .font(.caption)
-                        .foregroundStyle(Theme.deleteRed)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, Theme.spacing20)
-                }
-
-                if let compressionResult {
-                    Label(
-                        "Compressed to \(compressionResult.compressedSize, format: .byteCount(style: .file)) successfully!",
-                        systemImage: "checkmark.circle.fill"
-                    )
-                    .font(.subheadline)
-                    .bold()
-                    .foregroundStyle(Theme.bestGreen)
-                    .padding(.horizontal, Theme.spacing20)
-                }
-
-                Spacer()
-
-                if isCompressing {
-                    VStack(spacing: Theme.spacing12) {
-                        ProgressView()
-                        Text("Compressing video…")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .padding(.bottom, Theme.spacing20)
-                } else if compressionResult != nil {
-                    Button("Done") {
-                        dismiss()
-                    }
-                    .buttonStyle(.glassProminent)
-                    .padding(.horizontal, Theme.spacing20)
-                    .padding(.bottom, Theme.spacing20)
-                } else {
-                    Button("Compress Now", systemImage: "sparkles") {
-                        Task {
-                            await startCompression()
-                        }
-                    }
-                    .buttonStyle(.glassProminent)
-                    .padding(.horizontal, Theme.spacing20)
-                    .padding(.bottom, Theme.spacing20)
-                }
-            }
-            .navigationTitle("Compress")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-
-    private func startCompression() async {
-        isCompressing = true
-        errorMessage = nil
-        do {
-            let service = VideoCompressionService()
-            let res = try await service.compress(asset: item.asset)
-            compressionResult = res
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-        isCompressing = false
-    }
-}
-
 // MARK: - Preview sheet
 
-private struct VideoPreviewSheet: View {
+struct VideoPreviewSheet: View {
     let asset: PHAsset
     @State private var player: AVPlayer?
 
@@ -447,7 +284,7 @@ private struct VideoPreviewSheet: View {
     }
 }
 
-private final class PlayerItemResumeBox: @unchecked Sendable {
+final class PlayerItemResumeBox: @unchecked Sendable {
     private var isResumed = false
     private let lock = NSLock()
 
