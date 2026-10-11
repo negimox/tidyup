@@ -4,11 +4,13 @@ import Photos
 /// Displays all photos in a group; "best" shot is highlighted, others pre-selected.
 struct GroupDetailView: View {
     let group: SimilarGroup
+    var onReturnToHome: (() -> Void)? = nil
     @State private var selected: Set<String>
     @State private var showReview = false
 
-    init(group: SimilarGroup) {
+    init(group: SimilarGroup, onReturnToHome: (() -> Void)? = nil) {
         self.group = group
+        self.onReturnToHome = onReturnToHome
         _selected = State(initialValue: Set(group.otherAssets.map { $0.localIdentifier }))
     }
 
@@ -56,7 +58,8 @@ struct GroupDetailView: View {
             ReviewDeleteView(
                 selectedPhotoIDs: selected,
                 allAssets: allAssets,
-                contactGroups: []
+                contactGroups: [],
+                onReturnToHome: onReturnToHome
             )
         }
     }

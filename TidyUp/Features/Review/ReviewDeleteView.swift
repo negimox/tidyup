@@ -7,6 +7,8 @@ struct ReviewDeleteView: View {
     let allAssets: [PHAsset]
     let contactGroups: [DuplicateContactGroup]
 
+    var onReturnToHome: (() -> Void)? = nil
+
     @State private var viewModel = ReviewViewModel()
     @State private var showSpaceFreed = false
 
@@ -77,7 +79,8 @@ struct ReviewDeleteView: View {
                 if viewModel.isDeleting {
                     ProgressView("Deleting…")
                 } else {
-                    Button("Confirm & Clean", systemImage: "sparkles") {
+                    let totalItems = selectedAssets.count + contactGroups.count
+                    Button(totalItems > 0 ? "Delete \(totalItems) items" : "Confirm & Clean", systemImage: "trash.fill") {
                         Task {
                             await viewModel.performDeletion(
                                 assets: selectedAssets,
@@ -88,7 +91,9 @@ struct ReviewDeleteView: View {
                             }
                         }
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Theme.deleteRed)
+                    .controlSize(.large)
                     .disabled(selectedAssets.isEmpty && contactGroups.isEmpty)
                 }
 
@@ -101,12 +106,14 @@ struct ReviewDeleteView: View {
             }
             .padding(Theme.spacing20)
         }
-        .navigationTitle("Review & Delete")
+        .navigationTitle("Review")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $showSpaceFreed) {
             SpaceFreedView(
                 itemCount: selectedAssets.count,
-                contactsMerged: contactGroups.count
+                contactsMerged: contactGroups.count,
+                freedBytes: selectedPhotoBytes,
+                onReturnToHome: onReturnToHome
             )
         }
     }

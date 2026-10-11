@@ -4,6 +4,8 @@ import SwiftUI
 struct SpaceFreedView: View {
     let itemCount: Int
     let contactsMerged: Int
+    var freedBytes: Int64 = 0
+    var onReturnToHome: (() -> Void)? = nil
 
     @State private var showCheckmark = false
     @Environment(\.dismiss) private var dismiss
@@ -26,9 +28,15 @@ struct SpaceFreedView: View {
             }
 
             VStack(spacing: Theme.spacing12) {
-                Text("All Clean!")
-                    .font(.largeTitle)
-                    .bold()
+                if freedBytes > 0 {
+                    Text("\(freedBytes, format: .byteCount(style: .file)) freed")
+                        .font(.largeTitle)
+                        .bold()
+                } else {
+                    Text("All Clean!")
+                        .font(.largeTitle)
+                        .bold()
+                }
 
                 if itemCount > 0 {
                     Text("\(itemCount) item\(itemCount == 1 ? "" : "s") moved to Recently Deleted")
@@ -61,9 +69,16 @@ struct SpaceFreedView: View {
 
             Spacer()
 
-            Button("Done", systemImage: "checkmark") { dismiss() }
-                .buttonStyle(.glassProminent)
-                .padding(.bottom, Theme.spacing32)
+            Button("Done", systemImage: "checkmark") {
+                if let onReturnToHome {
+                    onReturnToHome()
+                } else {
+                    dismiss()
+                }
+            }
+            .buttonStyle(.glassProminent)
+            .padding(.horizontal, Theme.spacing32)
+            .padding(.bottom, Theme.spacing32)
         }
         .navigationTitle("Space Freed")
         .navigationBarTitleDisplayMode(.inline)

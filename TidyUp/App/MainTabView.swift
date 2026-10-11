@@ -6,9 +6,6 @@ struct MainTabView: View {
             Tab("Home", systemImage: "house") {
                 DashboardView()
             }
-            Tab("Clean", systemImage: "sparkles") {
-                DashboardView()
-            }
             Tab("Vault", systemImage: "lock.shield") {
                 VaultView()
             }
