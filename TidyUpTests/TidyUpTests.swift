@@ -8,27 +8,19 @@ struct ContactScanServiceTests {
 
     @Test("Phone normalization strips to last 10 digits")
     func phoneNormalization() async throws {
-        // Using a local helper that mirrors ContactScanService logic
-        let normalize: (String) -> String = { phone in
-            let digits = phone.filter { $0.isNumber }
-            return String(digits.suffix(10))
-        }
-
-        #expect(normalize("+1 (800) 555-1234") == "8005551234")
-        #expect(normalize("555-1234")           == "5551234")
-        #expect(normalize("+44 20 7946 0958")   == "2079460958")
-        #expect(normalize("")                   == "")
+        #expect(ContactScanService.normalize(phone: "+1 (800) 555-1234") == "8005551234")
+        #expect(ContactScanService.normalize(phone: "555-1234")           == "5551234")
+        #expect(ContactScanService.normalize(phone: "+44 20 7946 0958")   == "2079460958")
+        #expect(ContactScanService.normalize(phone: "")                   == "")
     }
 
     @Test("Jaro-Winkler similarity: identical names score 1.0")
     func nameSimilarityIdentical() async {
-        // Mirror the public-facing string distance indirectly via actor scan;
-        // here we just validate the boundary cases with a local implementation.
-        let service = ContactScanService()
-        // Scanning with no permission on simulator → returns empty; test only non-throws
-        let result = try? await service.scanDuplicates()
-        // Should not crash; result may be nil or empty on simulator
-        _ = result
+        let score = ContactScanService.jaroWinkler("john doe", "john doe")
+        #expect(score == 1.0)
+
+        let diffScore = ContactScanService.jaroWinkler("john", "alex")
+        #expect(diffScore < 0.5)
     }
 }
 

@@ -1,5 +1,6 @@
 import SwiftUI
 import Photos
+import PhotosUI
 import Contacts
 
 /// Explains permissions before requesting them; handles all authorization states.
@@ -65,7 +66,7 @@ struct PermissionsPrimerView: View {
                 // Limited Photos banner
                 if photosStatus == .limited {
                     Button("Expand Photo Selection…") {
-                        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: UIViewController())
+                        presentLimitedPicker()
                     }
                     .font(.caption)
                     .foregroundStyle(Theme.primary)
@@ -85,7 +86,24 @@ struct PermissionsPrimerView: View {
             }
             .navigationTitle("Welcome")
             .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: scenePhase) { _, newPhase in
+                if newPhase == .active {
+                    photosStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+                    contactsStatus = CNContactStore.authorizationStatus(for: .contacts)
+                    didGrantPhotos = photosStatus == .authorized || photosStatus == .limited
+                    didGrantContacts = contactsStatus == .authorized
+                }
+            }
         }
+    }
+
+    @Environment(\.scenePhase) private var scenePhase
+
+    @MainActor
+    private func presentLimitedPicker() {
+        guard let windowScene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first(where: { $0.activationState == .foregroundActive }) ?? UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first,
+              let rootVC = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController ?? windowScene.windows.first?.rootViewController else { return }
+        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: rootVC)
     }
 
     private func requestPermissions() async {
@@ -135,7 +153,7 @@ private struct PermissionCard: View {
                 .font(.title2)
                 .foregroundStyle(color)
                 .frame(width: 44, height: 44)
-                .background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: Theme.radiusCard))
+                .background(color.opacity(0.12), in: .rect(cornerRadius: Theme.radiusCard))
 
             VStack(alignment: .leading, spacing: Theme.spacing4) {
                 Text(title)
@@ -150,7 +168,7 @@ private struct PermissionCard: View {
             Spacer()
         }
         .padding(Theme.spacing16)
-        .background(Color(.secondarySystemBackground))
+        .background(Color.secondary.opacity(0.12))
         .clipShape(.rect(cornerRadius: Theme.radiusCard))
     }
 

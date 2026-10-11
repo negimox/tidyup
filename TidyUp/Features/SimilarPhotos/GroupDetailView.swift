@@ -85,10 +85,10 @@ private struct GroupPhotoCell: View {
             ZStack(alignment: .topTrailing) {
                 AssetThumbnail(asset: asset, size: 110)
                     .clipShape(.rect(cornerRadius: Theme.radiusCard))
-                    .overlay(
+                    .overlay {
                         RoundedRectangle(cornerRadius: Theme.radiusCard)
                             .stroke(isSelected ? Theme.deleteRed : .clear, lineWidth: 3)
-                    )
+                    }
                     .opacity(isBest ? 1 : (isSelected ? 0.7 : 1))
 
                 if isBest {

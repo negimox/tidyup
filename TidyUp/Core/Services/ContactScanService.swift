@@ -1,4 +1,4 @@
-import Contacts
+@preconcurrency import Contacts
 import Foundation
 
 /// Detects duplicate contacts using phone, email, and name fuzzy matching.
@@ -65,8 +65,8 @@ actor ContactScanService {
     }
 
     private func sharesPhone(_ a: CNContact, _ b: CNContact) -> Bool {
-        let aNums = a.phoneNumbers.map { normalize(phone: $0.value.stringValue) }.filter { !$0.isEmpty }
-        let bNums = b.phoneNumbers.map { normalize(phone: $0.value.stringValue) }.filter { !$0.isEmpty }
+        let aNums = a.phoneNumbers.map { Self.normalize(phone: $0.value.stringValue) }.filter { !$0.isEmpty }
+        let bNums = b.phoneNumbers.map { Self.normalize(phone: $0.value.stringValue) }.filter { !$0.isEmpty }
         return !Set(aNums).isDisjoint(with: Set(bNums))
     }
 
@@ -77,7 +77,7 @@ actor ContactScanService {
     }
 
     /// Normalises a phone number to its last 10 digits.
-    private func normalize(phone: String) -> String {
+    nonisolated static func normalize(phone: String) -> String {
         let digits = phone.filter { $0.isNumber }
         return String(digits.suffix(10))
     }
@@ -87,10 +87,10 @@ actor ContactScanService {
         let nameA = "\(a.givenName) \(a.familyName)".trimmingCharacters(in: .whitespaces).lowercased()
         let nameB = "\(b.givenName) \(b.familyName)".trimmingCharacters(in: .whitespaces).lowercased()
         guard !nameA.isEmpty, !nameB.isEmpty else { return 0 }
-        return jaroWinkler(nameA, nameB)
+        return Self.jaroWinkler(nameA, nameB)
     }
 
-    private func jaroWinkler(_ s1: String, _ s2: String) -> Double {
+    nonisolated static func jaroWinkler(_ s1: String, _ s2: String) -> Double {
         let jaro = jaroSimilarity(s1, s2)
         let arr1 = Array(s1), arr2 = Array(s2)
         var prefix = 0
@@ -100,7 +100,7 @@ actor ContactScanService {
         return jaro + Double(prefix) * 0.1 * (1 - jaro)
     }
 
-    private func jaroSimilarity(_ s1: String, _ s2: String) -> Double {
+    nonisolated static func jaroSimilarity(_ s1: String, _ s2: String) -> Double {
         let a = Array(s1), b = Array(s2)
         if a.isEmpty && b.isEmpty { return 1 }
         let matchDist = max(max(a.count, b.count) / 2 - 1, 0)

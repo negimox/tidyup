@@ -28,6 +28,20 @@ private final class UnionFind {
     }
 }
 
+/// Atomic resume guard ensuring CheckedContinuation is resumed at most once.
+private final class AtomicResumeBox: @unchecked Sendable {
+    private var isResumed = false
+    private let lock = NSLock()
+
+    func resume(continuation: CheckedContinuation<CGImage?, Never>, with image: CGImage?) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !isResumed else { return }
+        isResumed = true
+        continuation.resume(returning: image)
+    }
+}
+
 /// Performs Vision-based similar photo scanning with SwiftData caching.
 actor PhotoScanService {
 
@@ -43,13 +57,13 @@ actor PhotoScanService {
     // MARK: - Public Interface
 
     /// Scans photos and emits progress events via the returned `AsyncStream`.
-    /// - Parameter context: A `ModelContext` for the feature print cache.
-    func scan(context: ModelContext) -> AsyncStream<ScanProgress> {
+    /// - Parameter modelContainer: Optional `ModelContainer` for the feature print cache.
+    func scan(modelContainer: ModelContainer? = nil) -> AsyncStream<ScanProgress> {
         AsyncStream { continuation in
             let task = Task {
                 do {
                     continuation.yield(.started)
-                    let groups = try await self.performScan(context: context, continuation: continuation)
+                    let groups = try await self.performScan(modelContainer: modelContainer, continuation: continuation)
                     let screenshots = try await self.fetchScreenshots()
                     continuation.yield(.scanningScreenshots)
                     let videos = try await self.fetchVideos()
@@ -75,7 +89,7 @@ actor PhotoScanService {
     // MARK: - Private Implementation
 
     private func performScan(
-        context: ModelContext,
+        modelContainer: ModelContainer?,
         continuation: AsyncStream<ScanProgress>.Continuation
     ) async throws -> [SimilarGroup] {
         // Fetch all image assets
@@ -88,44 +102,77 @@ actor PhotoScanService {
         let total = assets.count
         guard total > 0 else { return [] }
 
+        // Preload cached feature prints on actor to avoid concurrent ModelContext access
+        var cachedMap: [String: (data: Data, modDate: Date)] = [:]
+        let context = modelContainer.map { ModelContext($0) }
+        if let context {
+            let descriptor = FetchDescriptor<CachedFeaturePrint>()
+            if let cachedEntries = try? context.fetch(descriptor) {
+                for entry in cachedEntries {
+                    cachedMap[entry.assetLocalIdentifier] = (entry.featurePrintData, entry.assetModificationDate)
+                }
+            }
+        }
+
         // Time-bucket assets
         let buckets = bucket(assets: assets)
 
         // Load or compute feature prints
         var featurePrints: [String: VNFeaturePrintObservation] = [:]
+        var newPrintsToCache: [(id: String, data: Data, creation: Date, mod: Date)] = []
         let maxConcurrency = max(1, ProcessInfo.processInfo.activeProcessorCount)
         var processed = 0
 
         for bucket in buckets {
             try Task.checkCancellation()
-            try await withThrowingTaskGroup(of: (String, VNFeaturePrintObservation?).self) { group in
+            try await withThrowingTaskGroup(of: (String, VNFeaturePrintObservation?, (Data, Date, Date)?).self) { group in
                 var pending = 0
                 for asset in bucket {
                     if pending >= maxConcurrency {
-                        if let (id, print) = try await group.next(), let print {
-                            featurePrints[id] = print
+                        if let (id, print, toCache) = try await group.next() {
+                            if let print { featurePrints[id] = print }
+                            if let (data, created, mod) = toCache {
+                                newPrintsToCache.append((id, data, created, mod))
+                            }
                             processed += 1
                             continuation.yield(.scanningPhotos(current: processed, total: total))
                         }
                         pending -= 1
                     }
+                    let id = asset.localIdentifier
+                    let cachedData = cachedMap[id]
                     group.addTask {
-                        let fp = await self.featurePrint(
+                        let (fp, newCache) = await self.featurePrint(
                             for: asset,
-                            cachedContext: context
+                            preloadedCache: cachedData
                         )
-                        return (asset.localIdentifier, fp)
+                        return (id, fp, newCache)
                     }
                     pending += 1
                 }
-                for try await (id, print) in group {
-                    if let print {
-                        featurePrints[id] = print
-                        processed += 1
-                        continuation.yield(.scanningPhotos(current: processed, total: total))
+                for try await (id, print, toCache) in group {
+                    if let print { featurePrints[id] = print }
+                    if let (data, created, mod) = toCache {
+                        newPrintsToCache.append((id, data, created, mod))
                     }
+                    processed += 1
+                    continuation.yield(.scanningPhotos(current: processed, total: total))
                 }
             }
+        }
+
+        // Batch save newly computed prints into SwiftData
+        if let context, !newPrintsToCache.isEmpty {
+            for item in newPrintsToCache {
+                let cached = CachedFeaturePrint(
+                    assetLocalIdentifier: item.id,
+                    featurePrintData: item.data,
+                    creationDate: item.creation,
+                    assetModificationDate: item.mod
+                )
+                context.insert(cached)
+            }
+            try? context.save()
         }
 
         continuation.yield(.groupingPhotos)
@@ -159,37 +206,30 @@ actor PhotoScanService {
     /// Returns a cached or freshly computed `VNFeaturePrintObservation` for the given asset.
     private func featurePrint(
         for asset: PHAsset,
-        cachedContext: ModelContext
-    ) async -> VNFeaturePrintObservation? {
-        // Check cache
-        let id = asset.localIdentifier
+        preloadedCache: (data: Data, modDate: Date)?
+    ) async -> (VNFeaturePrintObservation?, (Data, Date, Date)?) {
         let modDate = asset.modificationDate ?? asset.creationDate ?? .distantPast
-        let descriptor = FetchDescriptor<CachedFeaturePrint>(
-            predicate: #Predicate { $0.assetLocalIdentifier == id }
-        )
-        if let cached = try? cachedContext.fetch(descriptor).first,
-           cached.assetModificationDate >= modDate {
-            return try? VNFeaturePrintObservation.fromData(cached.featurePrintData)
+
+        // Check preloaded in-memory cache
+        if let cached = preloadedCache, cached.modDate >= modDate {
+            if let observation = try? VNFeaturePrintObservation.fromData(cached.data) {
+                return (observation, nil)
+            }
         }
 
         // Request thumbnail
-        guard let image = await requestThumbnail(for: asset) else { return nil }
+        guard let image = await requestThumbnail(for: asset) else { return (nil, nil) }
 
         // Compute feature print
-        guard let fp = computeFeaturePrint(for: image) else { return nil }
+        guard let fp = computeFeaturePrint(for: image) else { return (nil, nil) }
 
-        // Cache it
+        // Prepare new cache entry
         if let data = try? fp.toData() {
-            let cached = CachedFeaturePrint(
-                assetLocalIdentifier: id,
-                featurePrintData: data,
-                creationDate: asset.creationDate ?? .distantPast,
-                assetModificationDate: modDate
-            )
-            cachedContext.insert(cached)
-            try? cachedContext.save()
+            let creation = asset.creationDate ?? .distantPast
+            return (fp, (data, creation, modDate))
         }
-        return fp
+
+        return (fp, nil)
     }
 
     private func requestThumbnail(for asset: PHAsset) async -> CGImage? {
@@ -200,15 +240,16 @@ actor PhotoScanService {
         options.isSynchronous = false
         options.isNetworkAccessAllowed = false
 
+        let box = AtomicResumeBox()
         return await withCheckedContinuation { cont in
-            autoreleasepool {
+            _ = autoreleasepool {
                 PHImageManager.default().requestImage(
                     for: asset,
                     targetSize: size,
                     contentMode: .aspectFit,
                     options: options
                 ) { image, _ in
-                    cont.resume(returning: image?.cgImage)
+                    box.resume(continuation: cont, with: image?.cgImage)
                 }
             }
         }
@@ -225,7 +266,6 @@ actor PhotoScanService {
         assets: [PHAsset],
         featurePrints: [String: VNFeaturePrintObservation]
     ) -> [SimilarGroup] {
-        let indexedAssets = assets.enumerated().map { ($0, $1) }
         let uf = UnionFind(count: assets.count)
 
         // Only compare within buckets to avoid O(n²) globally
@@ -319,16 +359,19 @@ actor PhotoScanService {
     private func fileSize(for asset: PHAsset) -> Int64 {
         let resources = PHAssetResource.assetResources(for: asset)
         for resource in resources {
-            if let size = resource.value(forKey: "fileSize") as? Int64 {
+            if let size = resource.value(forKey: "fileSize") as? Int64, size > 0 {
                 return size
             }
         }
-        // Estimate from pixel dimensions for photos
+        if asset.mediaType == .video {
+            return max(1_000_000, Int64(asset.duration * 2_500_000))
+        }
         return Int64(asset.pixelWidth * asset.pixelHeight * 3)
     }
 }
 
-// MARK: - VNFeaturePrintObservation Serialization
+// MARK: - VNFeaturePrintObservation Serialization & Concurrency
+extension VNFeaturePrintObservation: @unchecked @retroactive Sendable {}
 
 extension VNFeaturePrintObservation {
     func toData() throws -> Data {

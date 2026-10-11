@@ -6,13 +6,13 @@ enum Theme {
 
     // MARK: - Brand Colors
 
-    static let primary      = Color("Primary")          // Indigo #5B5BF0
-    static let bestGreen    = Color("BestGreen")        // Keep badge
-    static let deleteRed    = Color("DeleteRed")        // Delete / warning
-    static let photosColor  = Color("PhotosIndigo")
-    static let screensColor = Color("ScreensCyan")
-    static let videosColor  = Color("VideosAmber")
-    static let contactsColor = Color("ContactsPink")
+    static let primary       = Color(red: 91 / 255.0, green: 91 / 255.0, blue: 240 / 255.0)    // Indigo #5B5BF0
+    static let bestGreen     = Color(red: 22 / 255.0, green: 163 / 255.0, blue: 74 / 255.0)   // Keep badge #16A34A
+    static let deleteRed     = Color(red: 239 / 255.0, green: 68 / 255.0, blue: 68 / 255.0)   // Delete / warning #EF4444
+    static let photosColor   = Color(red: 99 / 255.0, green: 102 / 255.0, blue: 241 / 255.0)  // PhotosIndigo #6366F1
+    static let screensColor  = Color(red: 6 / 255.0, green: 182 / 255.0, blue: 212 / 255.0)   // ScreensCyan #06B6D4
+    static let videosColor   = Color(red: 245 / 255.0, green: 158 / 255.0, blue: 11 / 255.0)  // VideosAmber #F59E0B
+    static let contactsColor = Color(red: 236 / 255.0, green: 72 / 255.0, blue: 153 / 255.0)  // ContactsPink #EC4899
 
     // MARK: - Spacing Grid (base-4/8)
 
@@ -34,5 +34,5 @@ enum Theme {
     // MARK: - Storage Ring
 
     static let ringSize:   CGFloat = 200
-    static let ringStroke: CGFloat = 3
+    static let ringStroke: CGFloat = 16
 }

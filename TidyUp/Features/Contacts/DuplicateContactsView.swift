@@ -101,5 +101,3 @@ private struct ContactGroupRow: View {
         }
     }
 }
-
-extension DuplicateContactGroup: @retroactive Identifiable {}

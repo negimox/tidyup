@@ -1,5 +1,5 @@
 import Photos
-import Contacts
+@preconcurrency import Contacts
 import Foundation
 
 /// Handles all item deletions: photos/videos via PhotoKit, contacts via CNSaveRequest.

@@ -19,9 +19,19 @@ struct ScreenshotsGridView: View {
                     description: Text("No screenshots found in your library.")
                 )
             } else {
-                toolbar
-                    .padding(.horizontal, Theme.spacing20)
-                    .padding(.vertical, Theme.spacing12)
+                ScreenshotHeaderToolbar(
+                    count: items.count,
+                    allSelected: allSelected,
+                    onToggleAll: {
+                        if allSelected {
+                            selected.removeAll()
+                        } else {
+                            selected = Set(items.map { $0.id })
+                        }
+                    }
+                )
+                .padding(.horizontal, Theme.spacing20)
+                .padding(.vertical, Theme.spacing12)
 
                 ScrollView {
                     LazyVGrid(
@@ -62,27 +72,29 @@ struct ScreenshotsGridView: View {
         }
     }
 
-    private var toolbar: some View {
-        HStack {
-            Text("\(items.count) screenshots")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Button(allSelected ? "Deselect All" : "Select All") {
-                if allSelected {
-                    selected.removeAll()
-                } else {
-                    selected = Set(items.map { $0.id })
-                }
-            }
-            .font(.subheadline)
-        }
-    }
-
     private var allSelected: Bool { selected.count == items.count }
 
     private func toggleSelection(_ id: String) {
         if selected.contains(id) { selected.remove(id) } else { selected.insert(id) }
+    }
+}
+
+// MARK: - Header Toolbar
+
+private struct ScreenshotHeaderToolbar: View {
+    let count: Int
+    let allSelected: Bool
+    let onToggleAll: () -> Void
+
+    var body: some View {
+        HStack {
+            Text("\(count) screenshots")
+                .font(.headline)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Button(allSelected ? "Deselect All" : "Select All", action: onToggleAll)
+                .font(.subheadline)
+        }
     }
 }
 
@@ -98,10 +110,10 @@ private struct ScreenshotCell: View {
             ZStack(alignment: .topTrailing) {
                 AssetThumbnail(asset: item.asset, size: 110)
                     .clipShape(.rect(cornerRadius: Theme.radiusCard))
-                    .overlay(
+                    .overlay {
                         RoundedRectangle(cornerRadius: Theme.radiusCard)
                             .stroke(isSelected ? Theme.deleteRed : .clear, lineWidth: 3)
-                    )
+                    }
 
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.title3)

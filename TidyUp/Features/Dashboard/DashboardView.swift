@@ -15,9 +15,26 @@ struct DashboardView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: Theme.spacing24) {
-                    storageSection
-                    scanButton
-                    categoriesSection
+                    DashboardStorageSection(
+                        usedBytes: viewModel.usedBytes,
+                        totalBytes: viewModel.totalBytes,
+                        freeableBytes: viewModel.scanResult?.totalFreeable ?? 0
+                    )
+
+                    DashboardScanControls(
+                        scanState: viewModel.scanState,
+                        onScan: { viewModel.startScan(modelContainer: modelContext.container) },
+                        onCancel: { viewModel.cancelScan() }
+                    )
+
+                    DashboardCategoriesSection(
+                        scanResult: viewModel.scanResult,
+                        isScanning: isScanning,
+                        onSelectSimilar: { showSimilarPhotos = true },
+                        onSelectScreenshots: { showScreenshots = true },
+                        onSelectVideos: { showVideos = true },
+                        onSelectContacts: { showContacts = true }
+                    )
                 }
                 .padding(.horizontal, Theme.spacing20)
                 .padding(.top, Theme.spacing24)
@@ -49,14 +66,25 @@ struct DashboardView: View {
         }
     }
 
-    // MARK: - Subviews
+    private var isScanning: Bool {
+        if case .scanning = viewModel.scanState { return true }
+        return false
+    }
+}
 
-    private var storageSection: some View {
+// MARK: - Subview Structs
+
+private struct DashboardStorageSection: View {
+    let usedBytes: Int64
+    let totalBytes: Int64
+    let freeableBytes: Int64
+
+    var body: some View {
         VStack(spacing: Theme.spacing16) {
-            StorageRingView(usedBytes: viewModel.usedBytes, totalBytes: viewModel.totalBytes)
+            StorageRingView(usedBytes: usedBytes, totalBytes: totalBytes)
 
-            if let result = viewModel.scanResult, result.totalFreeable > 0 {
-                Text("Free up \(result.totalFreeable, format: .byteCount(style: .file))")
+            if freeableBytes > 0 {
+                Text("Free up \(freeableBytes, format: .byteCount(style: .file))")
                     .font(.title3)
                     .bold()
                     .foregroundStyle(Theme.primary)
@@ -64,16 +92,20 @@ struct DashboardView: View {
             }
         }
     }
+}
 
-    private var scanButton: some View {
+private struct DashboardScanControls: View {
+    let scanState: DashboardViewModel.ScanState
+    let onScan: () -> Void
+    let onCancel: () -> Void
+
+    var body: some View {
         VStack(spacing: Theme.spacing8) {
-            switch viewModel.scanState {
+            switch scanState {
             case .idle:
-                Button("Scan Storage", systemImage: "sparkles") {
-                    viewModel.startScan(context: modelContext)
-                }
-                .buttonStyle(.glassProminent)
-                .accessibilityHint("Scans your photos, videos, and contacts for items you can delete")
+                Button("Scan Storage", systemImage: "sparkles", action: onScan)
+                    .buttonStyle(.glassProminent)
+                    .accessibilityHint("Scans your photos, videos, and contacts for items you can delete")
 
             case .scanning(let message, let progress):
                 VStack(spacing: Theme.spacing8) {
@@ -83,67 +115,69 @@ struct DashboardView: View {
                     Text(message)
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Button("Cancel", systemImage: "xmark.circle") {
-                        viewModel.cancelScan()
-                    }
-                    .buttonStyle(.glass)
+                    Button("Cancel", systemImage: "xmark.circle", action: onCancel)
+                        .buttonStyle(.glass)
                 }
 
             case .done:
-                Button("Rescan", systemImage: "arrow.clockwise") {
-                    viewModel.startScan(context: modelContext)
-                }
-                .buttonStyle(.glass)
+                Button("Rescan", systemImage: "arrow.clockwise", action: onScan)
+                    .buttonStyle(.glass)
             }
         }
     }
+}
 
-    private var categoriesSection: some View {
-        VStack(spacing: Theme.spacing12) {
-            CategoryRowView(
-                icon: "photo.on.rectangle.angled",
-                title: "Similar Photos",
-                color: Theme.photosColor,
-                itemCount: viewModel.scanResult?.similarGroups.count ?? 0,
-                savingsBytes: viewModel.scanResult?.similarGroups.reduce(0) { $0 + $1.estimatedSavings } ?? 0,
-                isScanning: isScanning,
-                action: { showSimilarPhotos = true }
-            )
+private struct DashboardCategoriesSection: View {
+    let scanResult: ScanResult?
+    let isScanning: Bool
+    let onSelectSimilar: () -> Void
+    let onSelectScreenshots: () -> Void
+    let onSelectVideos: () -> Void
+    let onSelectContacts: () -> Void
 
-            CategoryRowView(
-                icon: "camera.viewfinder",
-                title: "Screenshots",
-                color: Theme.screensColor,
-                itemCount: viewModel.scanResult?.screenshots.count ?? 0,
-                savingsBytes: viewModel.scanResult?.screenshots.reduce(0) { $0 + $1.fileSize } ?? 0,
-                isScanning: isScanning,
-                action: { showScreenshots = true }
-            )
+    var body: some View {
+        GlassEffectContainer(spacing: Theme.spacing12) {
+            VStack(spacing: Theme.spacing12) {
+                CategoryRowView(
+                    icon: "photo.on.rectangle.angled",
+                    title: "Similar Photos",
+                    color: Theme.photosColor,
+                    itemCount: scanResult?.similarGroups.count ?? 0,
+                    savingsBytes: scanResult?.similarGroups.reduce(0) { $0 + $1.estimatedSavings } ?? 0,
+                    isScanning: isScanning,
+                    action: onSelectSimilar
+                )
 
-            CategoryRowView(
-                icon: "video.badge.ellipsis",
-                title: "Large Videos",
-                color: Theme.videosColor,
-                itemCount: viewModel.scanResult?.videos.count ?? 0,
-                savingsBytes: viewModel.scanResult?.videos.reduce(0) { $0 + $1.fileSize } ?? 0,
-                isScanning: isScanning,
-                action: { showVideos = true }
-            )
+                CategoryRowView(
+                    icon: "camera.viewfinder",
+                    title: "Screenshots",
+                    color: Theme.screensColor,
+                    itemCount: scanResult?.screenshots.count ?? 0,
+                    savingsBytes: scanResult?.screenshots.reduce(0) { $0 + $1.fileSize } ?? 0,
+                    isScanning: isScanning,
+                    action: onSelectScreenshots
+                )
 
-            CategoryRowView(
-                icon: "person.2.badge.gearshape",
-                title: "Duplicate Contacts",
-                color: Theme.contactsColor,
-                itemCount: viewModel.scanResult?.duplicateContacts.count ?? 0,
-                savingsBytes: 0,
-                isScanning: isScanning,
-                action: { showContacts = true }
-            )
+                CategoryRowView(
+                    icon: "video.badge.ellipsis",
+                    title: "Large Videos",
+                    color: Theme.videosColor,
+                    itemCount: scanResult?.videos.count ?? 0,
+                    savingsBytes: scanResult?.videos.reduce(0) { $0 + $1.fileSize } ?? 0,
+                    isScanning: isScanning,
+                    action: onSelectVideos
+                )
+
+                CategoryRowView(
+                    icon: "person.2.badge.gearshape",
+                    title: "Duplicate Contacts",
+                    color: Theme.contactsColor,
+                    itemCount: scanResult?.duplicateContacts.count ?? 0,
+                    savingsBytes: 0,
+                    isScanning: isScanning,
+                    action: onSelectContacts
+                )
+            }
         }
-    }
-
-    private var isScanning: Bool {
-        if case .scanning = viewModel.scanState { return true }
-        return false
     }
 }

@@ -11,18 +11,18 @@ struct StorageRingView: View {
     }
 
     private var usedText: String {
-        ByteCountFormatStyle().format(usedBytes)
+        usedBytes.formatted(.byteCount(style: .file))
     }
 
     private var totalText: String {
-        ByteCountFormatStyle().format(totalBytes)
+        totalBytes.formatted(.byteCount(style: .file))
     }
 
     var body: some View {
         ZStack {
             // Background track
             Circle()
-                .stroke(Color(.systemFill), lineWidth: Theme.ringStroke)
+                .stroke(.quaternary, lineWidth: Theme.ringStroke)
 
             // Progress arc
             Circle()
@@ -53,13 +53,5 @@ struct StorageRingView: View {
         .accessibilityLabel(
             "\(usedText) used out of \(totalText), \(Int(fraction * 100))% full"
         )
-    }
-}
-
-// MARK: - ByteCountFormatStyle helper
-
-private struct ByteCountFormatStyle {
-    func format(_ bytes: Int64) -> String {
-        bytes.formatted(.byteCount(style: .file))
     }
 }

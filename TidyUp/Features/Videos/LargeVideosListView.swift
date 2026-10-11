@@ -96,7 +96,7 @@ private struct VideoRow: View {
             VStack(alignment: .leading, spacing: Theme.spacing4) {
                 Text(item.fileSize, format: .byteCount(style: .file))
                     .font(.headline)
-                Text(item.duration, format: .duration(unitsStyle: .abbreviated))
+                Text(Duration.seconds(item.duration), format: .units(width: .abbreviated))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 if let date = item.asset.creationDate {
@@ -133,8 +133,12 @@ private struct VideoPreviewSheet: View {
     private func loadPlayer() async {
         let options = PHVideoRequestOptions()
         options.isNetworkAccessAllowed = false
+        options.deliveryMode = .fastFormat
         let result: AVPlayerItem? = await withCheckedContinuation { cont in
+            var resumed = false
             PHImageManager.default().requestPlayerItem(forVideo: asset, options: options) { item, _ in
+                guard !resumed else { return }
+                resumed = true
                 cont.resume(returning: item)
             }
         }
@@ -144,5 +148,3 @@ private struct VideoPreviewSheet: View {
         }
     }
 }
-
-extension VideoItem: @retroactive Identifiable {}

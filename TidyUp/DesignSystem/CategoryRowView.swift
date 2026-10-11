@@ -18,7 +18,7 @@ struct CategoryRowView: View {
                     .font(.title2)
                     .foregroundStyle(color)
                     .frame(width: 44, height: 44)
-                    .background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: Theme.radiusCard))
+                    .background(color.opacity(0.12), in: .rect(cornerRadius: Theme.radiusCard))
 
                 VStack(alignment: .leading, spacing: Theme.spacing4) {
                     Text(title)
@@ -50,8 +50,7 @@ struct CategoryRowView: View {
             }
             .padding(.vertical, Theme.spacing12)
             .padding(.horizontal, Theme.spacing16)
-            .background(Color(.secondarySystemBackground))
-            .clipShape(.rect(cornerRadius: Theme.radiusCard))
+            .glassEffect(.regular.interactive(), in: .rect(cornerRadius: Theme.radiusSheet))
         }
         .buttonStyle(.plain)
         .disabled(itemCount == 0 || isScanning)

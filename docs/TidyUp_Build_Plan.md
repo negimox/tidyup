@@ -530,3 +530,21 @@ Per `swift-testing` skill:
 | Bonus: Security | `swift-security-expert` (Face ID vault, if time permits) |
 | Pre-submission | `review-swarm` (parallel review), `review-and-simplify-changes` (code quality) |
 | Testing | `swift-testing` (Swift Testing patterns, async tests) |
+
+---
+
+## 15. Implementation Progress & Phase Completion Status
+
+### Summary Table
+
+| Phase | Description | Status | Key Deliverables & Artifacts |
+|---|---|:---:|---|
+| **Phase 0** | Setup & Architecture | ✅ **Completed** | • Xcode project (`TidyUp.xcodeproj`)<br>• Project generator (`scripts/gen_xcodeproj.py`)<br>• App entry point (`TidyUpApp.swift`)<br>• Theme design system tokens (`Theme.swift`)<br>• App-wide Tab architecture (`MainTabView.swift`) |
+| **Phase 1** | Permissions & Dashboard | ✅ **Completed** | • Permission manager (`PermissionService.swift`)<br>• Permission primer & deep linking (`PermissionsPrimerView.swift`)<br>• ScenePhase foreground refresh (`TidyUpApp.swift`)<br>• Storage volume queries (`StorageService.swift`)<br>• Storage gauge circle (`StorageRingView.swift`)<br>• Category cards with Liquid Glass (`CategoryRowView.swift`)<br>• Main dashboard coordinator (`DashboardView.swift`, `DashboardViewModel.swift`) |
+| **Phase 2** | On-Device Scan Engine | ✅ **Completed** | • Vision feature print scan pipeline (`PhotoScanService.swift`)<br>• Time-window bucketing (10 min) & Union-Find clustering<br>• SwiftData persistence cache (`CachedFeaturePrint.swift`)<br>• Thread-safe preloaded in-memory cache lookup & batch insert<br>• Atomic CheckedContinuation resume guard (`AtomicResumeBox`)<br>• AsyncStream progress streaming (`ScanProgress.swift`)<br>• Duplicate contacts dedup engine (`ContactScanService.swift`) with Jaro-Winkler & phone normalization |
+| **Phase 3** | Review Screens | ✅ **Completed** | • Similar photos group browser (`SimilarPhotosListView.swift`)<br>• Best shot highlight & selection (`GroupDetailView.swift`)<br>• Screenshot multi-select grid (`ScreenshotsGridView.swift`)<br>• Large videos list with AVPlayer preview (`LargeVideosListView.swift`)<br>• Duplicate contacts merge list (`DuplicateContactsView.swift`)<br>• Full contact merge diff sheet (`ContactMergePreviewView.swift`)<br>• Sticky bottom action bar (`SelectionToolbar.swift`) |
+| **Phase 4** | Safe Deletion Flow | ✅ **Completed** | • Single-batch confirmation screen (`ReviewDeleteView.swift`)<br>• Asynchronous deletion coordinator (`ReviewViewModel.swift`)<br>• PhotoKit batch delete & Contacts merge engine (`DeletionService.swift`)<br>• Celebratory feedback & guidance (`SpaceFreedView.swift`)<br>• UINotificationFeedbackGenerator haptics |
+| **Phase 5** | Polish, Accessibility & Liquid Glass | ✅ **Completed** | • iOS 26 Liquid Glass buttons & cards (`.glassEffect`, `.buttonStyle(.glassProminent)`)<br>• VoiceOver accessibility labels & hints on all buttons & cards<br>• Dynamic Type typography across all views<br>• Strict compliance with `AGENTS.md` (no computed property views, dedicated structs) |
+| **Phase 6** | Bonus Features | ✅ **Completed** | • 🏠 Home Screen Storage Widget (`TidyUpWidget.swift`, `StorageWidgetView.swift`) supporting `.systemSmall` & `.systemMedium`<br>• 🎬 Video compression engine (`VideoCompressionService.swift`) with `AVAssetExportSession`<br>• 🔒 Biometric Private Vault (`VaultView.swift`) with `LocalAuthentication` & auto-lock |
+| **Phase 7** | Verification & Unit Testing | ✅ **Completed** | • Modern Swift Testing suite (`TidyUpTests.swift`) with `@Suite`, `@Test`, `#expect`<br>• Tests for Contact phone normalization, Jaro-Winkler string similarity, Storage capacity metrics, and Model conformance |
+

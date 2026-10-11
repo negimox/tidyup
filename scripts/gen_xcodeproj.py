@@ -108,15 +108,15 @@ s(0)
 s(2, "/* Begin PBXFileReference section */")
 for fname, rel, _ in main_files:
     fref_id, _ = main_ids[rel]
-    s(2, f'{fref_id} /* {fname} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(fname)}; sourceTree = "<group>"; }};')
+    s(2, f'{fref_id} /* {fname} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(rel)}; sourceTree = SOURCE_ROOT; }};')
 for fname, rel, _ in test_files:
     fref_id, _ = test_ids[rel]
-    s(2, f'{fref_id} /* {fname} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(fname)}; sourceTree = "<group>"; }};')
+    s(2, f'{fref_id} /* {fname} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(rel)}; sourceTree = SOURCE_ROOT; }};')
 # App product
 s(2, f'{APP_PRODUCT_ID} /* TidyUp.app */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TidyUp.app; sourceTree = BUILT_PRODUCTS_DIR; }};')
 s(2, f'{TEST_PRODUCT_ID} /* TidyUpTests.xctest */ = {{isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidyUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; }};')
 # Info.plist
-s(2, f'{INFOPLIST_FILE_REF} /* Info.plist */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; }};')
+s(2, f'{INFOPLIST_FILE_REF} /* Info.plist */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TidyUp/Resources/Info.plist"; sourceTree = SOURCE_ROOT; }};')
 s(2, "/* End PBXFileReference section */")
 s(0)
 

@@ -15,6 +15,8 @@ struct TidyUpApp: App {
         CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }()
 
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some Scene {
         WindowGroup {
             if didGrantPhotos || didGrantContacts {
@@ -27,5 +29,12 @@ struct TidyUpApp: App {
             }
         }
         .modelContainer(for: CachedFeaturePrint.self)
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+                didGrantPhotos = (status == .authorized || status == .limited)
+                didGrantContacts = (CNContactStore.authorizationStatus(for: .contacts) == .authorized)
+            }
+        }
     }
 }

@@ -43,12 +43,16 @@ final class DashboardViewModel {
         }
     }
 
-    func startScan(context: ModelContext) {
-        guard scanState == .idle else { return }
+    func startScan(modelContainer: ModelContainer? = nil) {
+        if case .scanning = scanState { return }
         scanTask?.cancel()
         scanTask = Task {
-            await performScan(context: context)
+            await performScan(modelContainer: modelContainer)
         }
+    }
+
+    func startScan(context: ModelContext) {
+        startScan(modelContainer: context.container)
     }
 
     func cancelScan() {
@@ -59,11 +63,11 @@ final class DashboardViewModel {
 
     // MARK: - Private
 
-    private func performScan(context: ModelContext) async {
+    private func performScan(modelContainer: ModelContainer? = nil) async {
         scanState = .scanning(message: "Starting…", progress: 0)
         scanError = nil
 
-        let stream = await photoScanService.scan(context: context)
+        let stream = await photoScanService.scan(modelContainer: modelContainer)
         for await event in stream {
             guard !Task.isCancelled else { break }
             switch event {

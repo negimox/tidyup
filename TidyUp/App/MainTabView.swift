@@ -9,6 +9,9 @@ struct MainTabView: View {
             Tab("Clean", systemImage: "sparkles") {
                 DashboardView()
             }
+            Tab("Vault", systemImage: "lock.shield") {
+                VaultView()
+            }
             Tab("Settings", systemImage: "gearshape") {
                 SettingsView()
             }

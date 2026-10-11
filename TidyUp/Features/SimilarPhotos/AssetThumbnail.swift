@@ -15,7 +15,7 @@ struct AssetThumbnail: View {
                     .resizable()
                     .scaledToFill()
             } else {
-                Color(.systemFill)
+                Color.secondary.opacity(0.12)
                     .overlay {
                         ProgressView()
                     }

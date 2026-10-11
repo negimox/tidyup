@@ -1,5 +1,5 @@
 import Photos
-import Contacts
+@preconcurrency import Contacts
 
 /// Handles all permission requests for Photos and Contacts.
 actor PermissionService {

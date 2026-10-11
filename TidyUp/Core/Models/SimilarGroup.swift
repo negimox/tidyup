@@ -2,7 +2,7 @@ import Photos
 import Foundation
 
 /// A group of visually similar photos, with the "best" shot identified.
-struct SimilarGroup: Identifiable, Sendable {
+struct SimilarGroup: Identifiable, Sendable, Hashable {
     let id: UUID
     /// The recommended photo to keep.
     var bestAsset: PHAsset
@@ -16,5 +16,13 @@ struct SimilarGroup: Identifiable, Sendable {
         self.bestAsset = bestAsset
         self.otherAssets = otherAssets
         self.estimatedSavings = estimatedSavings
+    }
+
+    static func == (lhs: SimilarGroup, rhs: SimilarGroup) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
